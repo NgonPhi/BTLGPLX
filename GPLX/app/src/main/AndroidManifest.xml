@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.SetUpGPLXActivity"/>
+        <activity android:name=".Activity.SetUpGPLXActivity">
+
+        </activity>
         <activity android:name=".Activity.TSHActivity" />
         <activity android:name=".Activity.HLTActivity" />
         <activity android:name=".Activity.BBDBActivity" />

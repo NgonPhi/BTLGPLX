@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -35,7 +36,18 @@ public class HLTActivity extends AppCompatActivity {
 
         AnhXa();
         GetData();
+        ClickItem();
         SetToolbar();
+    }
+
+    //Bắt sự kiện click vào dòng học lý thuyết
+    private void ClickItem() {
+        lvHocLyThuyet.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(HLTActivity.this, position + "", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     // Liên kết menu tạo bên res

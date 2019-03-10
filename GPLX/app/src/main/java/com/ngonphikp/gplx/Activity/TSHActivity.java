@@ -4,18 +4,26 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.Toast;
 
+import com.ngonphikp.gplx.Adapter.TSHAdapter;
+import com.ngonphikp.gplx.Model.ThiSatHach;
 import com.ngonphikp.gplx.R;
+
+import java.util.ArrayList;
 
 public class TSHActivity extends AppCompatActivity {
 
     android.support.v7.widget.Toolbar toolbar;
+    GridView gvDanhSachThi;
+    ArrayList<ThiSatHach> arrayThiSatHach;
+    TSHAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +31,34 @@ public class TSHActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tsh);
 
         AnhXa();
+        GetData();
+        ClickItem();
         SetToolbar();
+    }
+
+    // Bắt sự kiện Click Item Thi
+    private void ClickItem() {
+        gvDanhSachThi.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(TSHActivity.this, position + "", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void GetData() {
+        arrayThiSatHach = new ArrayList<>();
+
+        arrayThiSatHach.add(new ThiSatHach(8, 30));
+        arrayThiSatHach.add(new ThiSatHach(1, 30));
+        arrayThiSatHach.add(new ThiSatHach(4, 30));
+        arrayThiSatHach.add(new ThiSatHach(0, 30));
+        arrayThiSatHach.add(new ThiSatHach(15, 30));
+        arrayThiSatHach.add(new ThiSatHach(0, 30));
+        arrayThiSatHach.add(new ThiSatHach(23, 30));
+
+        adapter = new TSHAdapter(this, R.layout.item_thi, arrayThiSatHach);
+        gvDanhSachThi.setAdapter(adapter);
     }
 
     // Set toolbar thay cho actionbar
@@ -60,5 +95,6 @@ public class TSHActivity extends AppCompatActivity {
 
     private void AnhXa(){
         toolbar = findViewById(R.id.toolbar);
+        gvDanhSachThi = findViewById(R.id.GridViewDanhSachThi);
     }
 }
