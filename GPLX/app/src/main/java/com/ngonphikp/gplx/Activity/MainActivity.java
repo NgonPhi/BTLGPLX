@@ -166,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void OpenCCSActivity(){
-        Toast.makeText(MainActivity.this, "CÁC CÂU SAI", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(MainActivity.this, CCSActivity.class);
+        startActivity(intent);
     }
 }

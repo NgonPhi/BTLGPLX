@@ -45,7 +45,7 @@ public class BannerAdapter extends PagerAdapter {
         ImageView imgBGBanner = view.findViewById(R.id.imageViewBGBanner);
         TextView txtTitle = view.findViewById(R.id.textViewTitle);
 
-        Picasso.with(context).load(arrayListBanner.get(position).getHinhAnh()).into(imgBGBanner);
+        imgBGBanner.setImageResource(arrayListBanner.get(position).getHinhAnh());
         txtTitle.setText(arrayListBanner.get(position).getTieuDe());
 
         //Bắt sự kiện
