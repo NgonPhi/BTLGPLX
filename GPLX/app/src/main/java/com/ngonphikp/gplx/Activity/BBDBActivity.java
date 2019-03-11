@@ -4,7 +4,9 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
@@ -16,6 +18,8 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.ngonphikp.gplx.Adapter.BBDBAdapter;
+import com.ngonphikp.gplx.Adapter.PageAdapter;
+import com.ngonphikp.gplx.Fragment.Fragment_bbdb;
 import com.ngonphikp.gplx.Model.BienBaoDuongBo;
 import com.ngonphikp.gplx.R;
 
@@ -23,11 +27,9 @@ import java.util.ArrayList;
 
 public class BBDBActivity extends AppCompatActivity {
 
-    ListView lvBienBaoDuongBo;
-    ArrayList<BienBaoDuongBo> arrayBienBaoDuongBo;
-    BBDBAdapter adapter;
-
     android.support.v7.widget.Toolbar toolbar;
+    ViewPager viewPager;
+    TabLayout tab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +37,16 @@ public class BBDBActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bbdb);
 
         AnhXa();
-        GetData();
+        SetupViewPager();
         SetToolbar();
+    }
+
+    private void SetupViewPager() {
+        PageAdapter pageAdapter = new PageAdapter(getSupportFragmentManager());
+        pageAdapter.add(Fragment_bbdb.newInstance(1), "Loại 1");
+        pageAdapter.add(Fragment_bbdb.newInstance(2), "Loại 2");
+        viewPager.setAdapter(pageAdapter);
+        tab.setupWithViewPager(viewPager);
     }
 
     // Set toolbar thay cho actionbar
@@ -102,25 +112,9 @@ public class BBDBActivity extends AppCompatActivity {
     }
 
     private void AnhXa() {
-        lvBienBaoDuongBo = (ListView) findViewById(R.id.listViewBienBaoDuongBo);
         toolbar = findViewById(R.id.toolbar);
+        viewPager = findViewById(R.id.viewPager);
+        tab = findViewById(R.id.tab);
     }
-
-    private void GetData(){
-        arrayBienBaoDuongBo = new ArrayList<>();
-
-        arrayBienBaoDuongBo.add(new BienBaoDuongBo("Cấm máy kéo","Để báo đường cấm tất cả các loại máy kéo, kể cả máy kéo bánh hơi và bánh xích đi qua", R.drawable.bb1));
-        arrayBienBaoDuongBo.add(new BienBaoDuongBo("Cự ly tối thiểu giữa hai xe", "Để báo xe ô to phải đi cách nhau một khoảng tối thiểu. Số ghi trên biển báo cho biết khoảng cách tối thiểu tính bằng mét. Biển có hiệu lực cấm các xe ôtô không được đi cách nhau kể cả các xe được ưu tiên theo luật lệ nhà nước quy định cự ly nhỏ hơn trị số ghi trên biển báo.", R.drawable.bb2));
-        arrayBienBaoDuongBo.add(new BienBaoDuongBo("Cấm xe người kéo, đẩy", "Để báo đường cấm xe người kéo, đẩy đi qua. Biển không có giá trị cấm những xe nôi của trẻ em và phương tiện chuyên dùng để đi lại của người tàn tật", R.drawable.bb3));
-        arrayBienBaoDuongBo.add(new BienBaoDuongBo("Cấm ô tô khách và ô tô tải", "Để báo đường cấm ô tô chở hành khách và các loại ô tô tải trọng lượng lớn nhất cho phét trên 3,5 tấn kể cả các loại máy kéo và xe máy thi công chuyên dùng đi qua trừ các xe được ưu tiên theo luật nhà nước quy định.", R.drawable.bb4));
-        arrayBienBaoDuongBo.add(new BienBaoDuongBo("Cấm máy kéo","Để báo đường cấm tất cả các loại máy kéo, kể cả máy kéo bánh hơi và bánh xích đi qua", R.drawable.bb1));
-        arrayBienBaoDuongBo.add(new BienBaoDuongBo("Cự ly tối thiểu giữa hai xe", "Để báo xe ô to phải đi cách nhau một khoảng tối thiểu. Số ghi trên biển báo cho biết khoảng cách tối thiểu tính bằng mét. Biển có hiệu lực cấm các xe ôtô không được đi cách nhau kể cả các xe được ưu tiên theo luật lệ nhà nước quy định cự ly nhỏ hơn trị số ghi trên biển báo.", R.drawable.bb2));
-        arrayBienBaoDuongBo.add(new BienBaoDuongBo("Cấm xe người kéo, đẩy", "Để báo đường cấm xe người kéo, đẩy đi qua. Biển không có giá trị cấm những xe nôi của trẻ em và phương tiện chuyên dùng để đi lại của người tàn tật", R.drawable.bb3));
-        arrayBienBaoDuongBo.add(new BienBaoDuongBo("Cấm ô tô khách và ô tô tải", "Để báo đường cấm ô tô chở hành khách và các loại ô tô tải trọng lượng lớn nhất cho phét trên 3,5 tấn kể cả các loại máy kéo và xe máy thi công chuyên dùng đi qua trừ các xe được ưu tiên theo luật nhà nước quy định.", R.drawable.bb4));
-
-        adapter = new BBDBAdapter(this, R.layout.dong_bien_bao, arrayBienBaoDuongBo);
-        lvBienBaoDuongBo.setAdapter(adapter);
-    }
-
 
 }

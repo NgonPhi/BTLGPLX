@@ -4,6 +4,7 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ public class TSHActivity extends AppCompatActivity {
     GridView gvDanhSachThi;
     ArrayList<ThiSatHach> arrayThiSatHach;
     TSHAdapter adapter;
+    ConstraintLayout itemThiNgauNhien;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,12 @@ public class TSHActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(TSHActivity.this, position + "", Toast.LENGTH_SHORT).show();
+            }
+        });
+        itemThiNgauNhien.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(TSHActivity.this, "Thi Ngẫu Nhiên", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -96,5 +104,6 @@ public class TSHActivity extends AppCompatActivity {
     private void AnhXa(){
         toolbar = findViewById(R.id.toolbar);
         gvDanhSachThi = findViewById(R.id.GridViewDanhSachThi);
+        itemThiNgauNhien = (ConstraintLayout) findViewById(R.id.itemThiNgauNhien);
     }
 }

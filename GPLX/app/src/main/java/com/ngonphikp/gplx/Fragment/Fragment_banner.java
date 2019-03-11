@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ngonphikp.gplx.Activity.MainActivity;
 import com.ngonphikp.gplx.Adapter.BannerAdapter;
 import com.ngonphikp.gplx.Model.QuangCao;
 import com.ngonphikp.gplx.R;

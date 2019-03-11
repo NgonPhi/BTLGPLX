@@ -13,9 +13,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import com.ngonphikp.gplx.Adapter.LeftMenuAdapter;
+import com.ngonphikp.gplx.Model.ItemLeftMenu;
 import com.ngonphikp.gplx.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,14 +32,43 @@ public class MainActivity extends AppCompatActivity {
     android.support.v7.widget.Toolbar toolbar;
     DrawerLayout drawerLayout;
 
+    ListView lvTop;
+    ListView lvBot;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         AnhXa();
+        InitLeftMenu();
         ClickItem();
         SetToolbar();
+    }
+
+    // Khởi tạo Left menu
+    private void InitLeftMenu() {
+        ArrayList<ItemLeftMenu> arrayTop = new ArrayList<ItemLeftMenu>();
+
+        arrayTop.add(new ItemLeftMenu("Thi Sát Hạch", R.drawable.setting));
+        arrayTop.add(new ItemLeftMenu("Học Lý Thuyết", R.drawable.setting));
+        arrayTop.add(new ItemLeftMenu("Biển Báo Đường Bộ", R.drawable.setting));
+        arrayTop.add(new ItemLeftMenu("Mẹo Thi", R.drawable.setting));
+        arrayTop.add(new ItemLeftMenu("Tra Cứu Luật", R.drawable.setting));
+        arrayTop.add(new ItemLeftMenu("Chọn Bằng GPLX", R.drawable.setting));
+
+        LeftMenuAdapter adapter = new LeftMenuAdapter(this, R.layout.dong_left_menu, arrayTop);
+        lvTop.setAdapter(adapter);
+
+        lvTop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(position == 5){
+                    Intent intent = new Intent(MainActivity.this, SetUpGPLXActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     // Set toolbar thay cho actionbar
@@ -101,6 +139,8 @@ public class MainActivity extends AppCompatActivity {
         itemCCS = (ConstraintLayout) findViewById(R.id.itemCacCauSai);
         toolbar = findViewById(R.id.toolbar);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        lvTop = (ListView) findViewById(R.id.listViewTop);
+        lvBot = (ListView) findViewById(R.id.listViewBot);
     }
 
     private void ClickItem(){

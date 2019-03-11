@@ -260,6 +260,23 @@
             android:layout_height="match_parent"
             android:background="@android:color/white"
             android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="150dp"/>
+
+            <ListView
+                android:id="@+id/listViewTop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </ListView>
+
+            <ListView
+                android:id="@+id/listViewBot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </ListView>
+
         </LinearLayout>
 
     </android.support.design.widget.NavigationView>
