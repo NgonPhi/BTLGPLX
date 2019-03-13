@@ -27,8 +27,12 @@ public class SUGPLXAdapter extends BaseAdapter {
         return selectedPosition;
     }
 
-    public void setSelectedPosition(int selectedPosition) {
-        this.selectedPosition = selectedPosition;
+    public void setSelectedPosition(String level) {
+        for(int i = 0; i < SUGPLXList.size(); i++){
+            if (SUGPLXList.get(i).getType().equals(level)){
+                this.selectedPosition = i;
+            }
+        }
     }
 
     public SUGPLXAdapter(Context context, int layout, List<SetUpGPLX> SUGPLXList) {
@@ -63,7 +67,7 @@ public class SUGPLXAdapter extends BaseAdapter {
         TextView txtContent = (TextView) convertView.findViewById(R.id.textViewContent);
         RadioButton radioBtn = (RadioButton) convertView.findViewById(R.id.radioButton);
         //gán giá trị
-        txtType.setText(SUGPLXList.get(position).getType());
+        txtType.setText("Bằng " + SUGPLXList.get(position).getType());
         txtContent.setText(SUGPLXList.get(position).getContent());
 
         //check the radio button if both position and selectedPosition matches

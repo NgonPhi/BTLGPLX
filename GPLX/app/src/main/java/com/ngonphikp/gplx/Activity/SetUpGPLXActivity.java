@@ -21,11 +21,13 @@ import java.util.ArrayList;
 
 public class SetUpGPLXActivity extends AppCompatActivity {
 
+    SharedPreferences sharedPreferences;
+
     ListView lvSUGPLX;
     ArrayList<SetUpGPLX> arraySUGPLX;
     SUGPLXAdapter adapter;
 
-    int pos;
+    String level;
 
     android.support.v7.widget.Toolbar toolbar;
 
@@ -79,17 +81,22 @@ public class SetUpGPLXActivity extends AppCompatActivity {
     private void GetData() {
         arraySUGPLX = new ArrayList<>();
 
-        arraySUGPLX.add(new SetUpGPLX("Bằng A1", "Xe máy"));
-        arraySUGPLX.add(new SetUpGPLX("Bằng A2", "Xe mô tô 2 bánh"));
-        arraySUGPLX.add(new SetUpGPLX("Bằng B1", "Ô tô tải trọng dưới 3500kg"));
-        arraySUGPLX.add(new SetUpGPLX("Bằng B2", "Ô tô chở người đến 9 chỗ"));
+        arraySUGPLX.add(new SetUpGPLX("A1", "Xe máy"));
+        arraySUGPLX.add(new SetUpGPLX("A2", "Xe mô tô 2 bánh"));
+        arraySUGPLX.add(new SetUpGPLX("A3", "Xe mô tô 3 bánh, xe lam..."));
+        arraySUGPLX.add(new SetUpGPLX("B1", "Ô tô tải trọng dưới 3500kg"));
+        arraySUGPLX.add(new SetUpGPLX("B2", "Ô tô chở người đến 9 chỗ"));
+        arraySUGPLX.add(new SetUpGPLX("C", "Ô tô tải trên 3.500kg"));
+        arraySUGPLX.add(new SetUpGPLX("D", "Ô tô chở người 10 đến 30 chỗ"));
+        arraySUGPLX.add(new SetUpGPLX("E", "Ô tô chở người trên 30 chỗ"));
+        arraySUGPLX.add(new SetUpGPLX("F", "Điều khiển các loại kéo móc"));
 
         adapter = new SUGPLXAdapter(this, R.layout.dong_set_up_gplx, arraySUGPLX);
 
         //Lấy dữ liệu trong data
-        int getData = 2; // ví dụ :bằng A2 --> pos 1
-        pos = getData;
-        adapter.setSelectedPosition(pos);
+        sharedPreferences = getSharedPreferences("LocalData", Context.MODE_PRIVATE);
+        level = sharedPreferences.getString("Level", "A1");
+        adapter.setSelectedPosition(level);
 
         lvSUGPLX.setAdapter(adapter);
     }
@@ -97,10 +104,9 @@ public class SetUpGPLXActivity extends AppCompatActivity {
     //Adapter call function in activity - Sự kiện khi chọn radioButton
     public void CallMethod(int pos) {
         //Lưu lại vào data
-//        SharedPreferences sharedPreferences = getSharedPreferences("LocalData", Context.MODE_PRIVATE);
-//        SharedPreferences.Editor editor = sharedPreferences.edit();
-//        editor.putInt("Level",pos);
-//        editor.commit();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("Level", arraySUGPLX.get(pos).getType());
+        editor.commit();
 
         //Hiển thị toast
         Toast.makeText(this, "Chọn " + arraySUGPLX.get(pos).getType(), Toast.LENGTH_SHORT).show();

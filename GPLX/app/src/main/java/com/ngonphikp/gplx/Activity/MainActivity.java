@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         AnhXa();
         InitLeftMenu();
+        ClickLeftMenuItem();
         ClickItem();
         SetToolbar();
     }
@@ -49,23 +50,46 @@ public class MainActivity extends AppCompatActivity {
     // Khởi tạo Left menu
     private void InitLeftMenu() {
         ArrayList<ItemLeftMenu> arrayTop = new ArrayList<ItemLeftMenu>();
-
-        arrayTop.add(new ItemLeftMenu("Thi Sát Hạch", R.drawable.setting));
-        arrayTop.add(new ItemLeftMenu("Học Lý Thuyết", R.drawable.setting));
-        arrayTop.add(new ItemLeftMenu("Biển Báo Đường Bộ", R.drawable.setting));
-        arrayTop.add(new ItemLeftMenu("Mẹo Thi", R.drawable.setting));
-        arrayTop.add(new ItemLeftMenu("Tra Cứu Luật", R.drawable.setting));
-        arrayTop.add(new ItemLeftMenu("Chọn Bằng GPLX", R.drawable.setting));
-
+        arrayTop.add(new ItemLeftMenu("Thi Sát Hạch", R.drawable.thisathach));
+        arrayTop.add(new ItemLeftMenu("Học Lý Thuyết", R.drawable.hoclythuyet));
+        arrayTop.add(new ItemLeftMenu("Mẹo Thi Kết Quả Cao", R.drawable.meothiketquacao));
+        arrayTop.add(new ItemLeftMenu("Biển Báo Đường Bộ", R.drawable.bienbaoduongbo));
+        arrayTop.add(new ItemLeftMenu("Tra Cứu Luật Nhanh", R.drawable.tracuuluat));
+        arrayTop.add(new ItemLeftMenu("Các Câu Hay Sai", R.drawable.cauhaysai));
         LeftMenuAdapter adapter = new LeftMenuAdapter(this, R.layout.dong_left_menu, arrayTop);
-        lvTop.setAdapter(adapter);
 
+        ArrayList<ItemLeftMenu> arrayBot = new ArrayList<ItemLeftMenu>();
+        arrayBot.add(new ItemLeftMenu("Chọn Bằng GPLX",R.drawable.chonbanggplx));
+        arrayBot.add(new ItemLeftMenu("Đánh Giá Ứng Dụng",R.drawable.danhgiaungdung));
+        arrayBot.add(new ItemLeftMenu("Ứng Dụng Khác",R.drawable.ungdungkhac));
+        arrayBot.add(new ItemLeftMenu("Chính Sách Và Điều Khoản",R.drawable.dieukhoanvachinhsach));
+        LeftMenuAdapter adapter1 = new LeftMenuAdapter(this, R.layout.dong_left_menu,arrayBot);
+
+        lvTop.setAdapter(adapter);
+        lvBot.setAdapter(adapter1);
+    }
+
+    private void ClickLeftMenuItem(){
+        //Bắt sự kiện với listview top
         lvTop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(position == 5){
-                    Intent intent = new Intent(MainActivity.this, SetUpGPLXActivity.class);
-                    startActivity(intent);
+                CallMethod(position);
+            }
+        });
+        //Bắt sự kiện với listview bot
+        lvBot.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position){
+                    case 0:
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
                 }
             }
         });
@@ -126,6 +150,9 @@ public class MainActivity extends AppCompatActivity {
             case 4:
                 //Tra cứu luật
                 OpenTCLActivity();
+            case 5:
+                // Các câu hay sai
+                OpenCCSActivity();
                 break;
         }
     }
@@ -198,11 +225,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void OpenTCLActivity(){
-        Toast.makeText(MainActivity.this, "TRA CỨU LUẬT NHANH", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(MainActivity.this, TCLActivity.class);
+        startActivity(intent);
     }
 
     private void OpenMTActivity(){
-        Toast.makeText(MainActivity.this, "MẸO THI KẾT QUẢ CAO", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(MainActivity.this, MTActivity.class);
+        startActivity(intent);
     }
 
     private void OpenCCSActivity(){

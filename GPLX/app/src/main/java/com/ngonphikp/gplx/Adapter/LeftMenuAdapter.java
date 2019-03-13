@@ -14,7 +14,6 @@ import com.ngonphikp.gplx.R;
 import java.util.List;
 
 public class LeftMenuAdapter extends BaseAdapter {
-
     private Context context;
     private int layout;
     private List<ItemLeftMenu> LeftMenuList;
@@ -46,7 +45,7 @@ public class LeftMenuAdapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = inflater.inflate(layout, null);
         //ánh xạ view
-        TextView txtContent = (TextView) convertView.findViewById(R.id.textViewContent);
+        TextView txtContent =(TextView) convertView.findViewById(R.id.textViewContent);
         ImageView imgImage = (ImageView) convertView.findViewById(R.id.imageViewImage);
         //gán giá trị
         txtContent.setText(LeftMenuList.get(position).getContent());
