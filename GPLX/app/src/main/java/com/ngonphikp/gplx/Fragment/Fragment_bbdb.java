@@ -4,69 +4,86 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.ngonphikp.gplx.Adapter.BBDBAdapter;
-import com.ngonphikp.gplx.Model.BienBaoDuongBo;
+import com.ngonphikp.gplx.Model.BBDB;
 import com.ngonphikp.gplx.R;
+import com.ngonphikp.gplx.Service.APIService;
+import com.ngonphikp.gplx.Service.Dataservice;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Fragment_bbdb extends Fragment {
 
+    View view;
+    ListView lvBienBaoDuongBo;
+    ArrayList<BBDB> data;
+    BBDBAdapter adapter;
+    ProgressBar progressBar;
+
     private static final String KEY = "key";
-    private int pos;
+    private String type;
 
     public Fragment_bbdb() {
     }
 
-    public static Fragment_bbdb newInstance(int pos){
+    public static Fragment_bbdb newInstance(String type){
         Fragment_bbdb fragment_bbdb = new Fragment_bbdb();
         Bundle bundle = new Bundle();
-        bundle.putInt(KEY, pos);
+        bundle.putString(KEY, type);
         fragment_bbdb.setArguments(bundle);
         return fragment_bbdb;
     }
-
-    View view;
-    ListView lvBienBaoDuongBo;
-    ArrayList<BienBaoDuongBo> arrayBienBaoDuongBo;
-    BBDBAdapter adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        pos = getArguments().getInt(KEY);
+        type = getArguments().getString(KEY);
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_bbdb, container, false);
         AnhXa();
         GetData();
-
         return view;
     }
 
     private void GetData(){
-        arrayBienBaoDuongBo = new ArrayList<>();
+        Dataservice dataservice = APIService.getService();
+        Call<List<BBDB>> callback = dataservice.GetBBDBbyType(type);
+        data = new ArrayList<>();
+        callback.enqueue(new Callback<List<BBDB>>() {
+            @Override
+            public void onResponse(Call<List<BBDB>> call, Response<List<BBDB>> response) {
+                data = (ArrayList<BBDB>) response.body();
+                adapter = new BBDBAdapter(getActivity(), R.layout.dong_bien_bao, data);
+                lvBienBaoDuongBo.setAdapter(adapter);
+                progressBar.setVisibility(View.GONE);
+            }
 
-        if(pos == 1){
-            arrayBienBaoDuongBo.add(new BienBaoDuongBo("Cấm máy kéo","Để báo đường cấm tất cả các loại máy kéo, kể cả máy kéo bánh hơi và bánh xích đi qua", R.drawable.bb1));
-            arrayBienBaoDuongBo.add(new BienBaoDuongBo("Cự ly tối thiểu giữa hai xe", "Để báo xe ô to phải đi cách nhau một khoảng tối thiểu. Số ghi trên biển báo cho biết khoảng cách tối thiểu tính bằng mét. Biển có hiệu lực cấm các xe ôtô không được đi cách nhau kể cả các xe được ưu tiên theo luật lệ nhà nước quy định cự ly nhỏ hơn trị số ghi trên biển báo.", R.drawable.bb2));
-        }
-        if(pos == 2){
-            arrayBienBaoDuongBo.add(new BienBaoDuongBo("Cấm xe người kéo, đẩy", "Để báo đường cấm xe người kéo, đẩy đi qua. Biển không có giá trị cấm những xe nôi của trẻ em và phương tiện chuyên dùng để đi lại của người tàn tật", R.drawable.bb3));
-            arrayBienBaoDuongBo.add(new BienBaoDuongBo("Cấm ô tô khách và ô tô tải", "Để báo đường cấm ô tô chở hành khách và các loại ô tô tải trọng lượng lớn nhất cho phét trên 3,5 tấn kể cả các loại máy kéo và xe máy thi công chuyên dùng đi qua trừ các xe được ưu tiên theo luật nhà nước quy định.", R.drawable.bb4));
-        }
-        adapter = new BBDBAdapter(getActivity(), R.layout.dong_bien_bao, arrayBienBaoDuongBo);
-        lvBienBaoDuongBo.setAdapter(adapter);
+            @Override
+            public void onFailure(Call<List<BBDB>> call, Throwable t) {
+                Log.d("Tag", t.getMessage());
+                t.printStackTrace();
+            }
+        });
     }
 
     private void AnhXa() {
         lvBienBaoDuongBo = (ListView) view.findViewById(R.id.listViewBienBaoDuongBo);
+        progressBar = view.findViewById(R.id.progressBar);
     }
 }

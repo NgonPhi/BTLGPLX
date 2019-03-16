@@ -130,10 +130,7 @@ public class CCSActivity extends AppCompatActivity {
         toolbar.setTitle("Các câu hay sai");
         setSupportActionBar(toolbar);
 
-        //Thêm nút navigation
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        //Thay đổi icon
+        //Thêm nút navigation và thay đổi icon
         //Lấy chiều cao của ActionBar
         TypedArray styledAttributes =
                 getTheme().obtainStyledAttributes(new int[] { android.R.attr.actionBarSize });

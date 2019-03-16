@@ -15,21 +15,27 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
+import android.widget.ProgressBar;
 
-import com.ngonphikp.gplx.Adapter.BBDBAdapter;
-import com.ngonphikp.gplx.Adapter.PageAdapter;
+import com.ngonphikp.gplx.Adapter.PageBBAdapter;
 import com.ngonphikp.gplx.Fragment.Fragment_bbdb;
-import com.ngonphikp.gplx.Model.BienBaoDuongBo;
 import com.ngonphikp.gplx.R;
+import com.ngonphikp.gplx.Service.APIService;
+import com.ngonphikp.gplx.Service.Dataservice;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BBDBActivity extends AppCompatActivity {
 
     android.support.v7.widget.Toolbar toolbar;
     ViewPager viewPager;
     TabLayout tab;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +48,26 @@ public class BBDBActivity extends AppCompatActivity {
     }
 
     private void SetupViewPager() {
-        PageAdapter pageAdapter = new PageAdapter(getSupportFragmentManager());
-        pageAdapter.add(Fragment_bbdb.newInstance(1), "Loại 1");
-        pageAdapter.add(Fragment_bbdb.newInstance(2), "Loại 2");
-        viewPager.setAdapter(pageAdapter);
-        tab.setupWithViewPager(viewPager);
+        final PageBBAdapter pageAdapter = new PageBBAdapter(getSupportFragmentManager());
+        Dataservice dataservice = APIService.getService();
+        Call<List<String>> callback = dataservice.GetTypeBBDB();
+        callback.enqueue(new Callback<List<String>>() {
+            @Override
+            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+                ArrayList<String> DSTitle = new ArrayList<String>();
+                DSTitle = (ArrayList<String>) response.body();
+                for (int i = 0; i < DSTitle.size(); i++)
+                    pageAdapter.add(Fragment_bbdb.newInstance(DSTitle.get(i)), DSTitle.get(i));
+                viewPager.setAdapter(pageAdapter);
+                tab.setupWithViewPager(viewPager);
+                progressBar.setVisibility(View.GONE);
+            }
+            @Override
+            public void onFailure(Call<List<String>> call, Throwable t) {
+                Log.d("Tag", t.getMessage());
+                t.printStackTrace();
+            }
+        });
     }
 
     // Set toolbar thay cho actionbar
@@ -55,10 +76,7 @@ public class BBDBActivity extends AppCompatActivity {
         toolbar.setTitle("Biển báo giao thông");
         setSupportActionBar(toolbar);
 
-        //Thêm nút navigation
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        //Thay đổi icon
+        //Thêm nút navigation và thay đổi icon
         //Lấy chiều cao của ActionBar
         TypedArray styledAttributes =
                 getTheme().obtainStyledAttributes(new int[] { android.R.attr.actionBarSize });
@@ -99,12 +117,11 @@ public class BBDBActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                Log.d("Tag", s);
                 return false;
             }
-
             @Override
             public boolean onQueryTextChange(String s) {
+                Log.d("Tag", s);
                 return false;
             }
         });
@@ -115,6 +132,7 @@ public class BBDBActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         viewPager = findViewById(R.id.viewPager);
         tab = findViewById(R.id.tab);
+        progressBar = findViewById(R.id.progressBar);
     }
 
 }

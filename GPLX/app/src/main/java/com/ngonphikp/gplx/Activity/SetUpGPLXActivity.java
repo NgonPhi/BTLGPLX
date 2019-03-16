@@ -47,10 +47,7 @@ public class SetUpGPLXActivity extends AppCompatActivity {
         toolbar.setTitle("Chọn hạng bằng thi");
         setSupportActionBar(toolbar);
 
-        //Thêm nút navigation
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        //Thay đổi icon
+        //Thêm nút navigation và thay đổi icon
         //Lấy chiều cao của ActionBar
         TypedArray styledAttributes =
                 getTheme().obtainStyledAttributes(new int[] { android.R.attr.actionBarSize });

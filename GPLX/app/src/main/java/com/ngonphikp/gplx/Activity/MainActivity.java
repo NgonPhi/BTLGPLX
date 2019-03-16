@@ -17,11 +17,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ngonphikp.gplx.Adapter.LeftMenuAdapter;
 import com.ngonphikp.gplx.Model.ItemLeftMenu;
 import com.ngonphikp.gplx.R;
+import com.ngonphikp.gplx.Service.APIService;
+import com.ngonphikp.gplx.Service.Dataservice;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     ListView lvTop;
     ListView lvBot;
+    TextView txtURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,27 +73,40 @@ public class MainActivity extends AppCompatActivity {
         lvBot.setAdapter(adapter1);
     }
 
+    //Bắt sự kiện với LeftMenu
     private void ClickLeftMenuItem(){
-        //Bắt sự kiện với listview top
+        //text URL
+        txtURL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Google", Toast.LENGTH_SHORT).show();
+            }
+        });
+        //listview top
         lvTop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 CallMethod(position);
             }
         });
-        //Bắt sự kiện với listview bot
+        //istview bot
         lvBot.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
-                    case 0:
-                        break;
-                    case 1:
-                        break;
-                    case 2:
-                        break;
-                    case 3:
-                        break;
+                case 0:
+                    Intent intent = new Intent(MainActivity.this, SetUpGPLXActivity.class);
+                    startActivity(intent);
+                    break;
+                case 1:
+                    Toast.makeText(MainActivity.this, "Đánh Giá Ứng Dụng", Toast.LENGTH_SHORT).show();
+                    break;
+                case 2:
+                    Toast.makeText(MainActivity.this, "Ứng Dụng Khác", Toast.LENGTH_SHORT).show();
+                    break;
+                case 3:
+                    Toast.makeText(MainActivity.this, "Chính Sách Và Điều Khoản", Toast.LENGTH_SHORT).show();
+                    break;
                 }
             }
         });
@@ -101,16 +118,13 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitle("Ôn thi giấy phép lái xe");
         setSupportActionBar(toolbar);
 
-        //Thêm nút navigation
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        //Thay đổi icon
-            //Lấy chiều cao của ActionBar
+        //Thêm nút navigation và thay đổi icon
+        //Lấy chiều cao của ActionBar
         TypedArray styledAttributes =
                 getTheme().obtainStyledAttributes(new int[] { android.R.attr.actionBarSize });
         int actionBarSize = (int) styledAttributes.getDimension(0, 0);
         styledAttributes.recycle();
-            //Tạo Drawable mới bằng cách thu/phóng
+        //Tạo Drawable mới bằng cách thu/phóng
         Drawable drawable= ContextCompat.getDrawable(this, R.drawable.menu);
         Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
         Drawable newdrawable = new BitmapDrawable(getResources(),
@@ -150,6 +164,7 @@ public class MainActivity extends AppCompatActivity {
             case 4:
                 //Tra cứu luật
                 OpenTCLActivity();
+                break;
             case 5:
                 // Các câu hay sai
                 OpenCCSActivity();
@@ -168,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         lvTop = (ListView) findViewById(R.id.listViewTop);
         lvBot = (ListView) findViewById(R.id.listViewBot);
+        txtURL = (TextView) findViewById(R.id.textViewURL);
     }
 
     private void ClickItem(){

@@ -283,11 +283,12 @@
                     app:layout_constraintVertical_bias="0.19" />
 
                 <TextView
+                    android:id="@+id/textViewURL"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:text="http://Google.com.vn/Title"
+                    android:text="https://www.google.com/"
                     android:textColor="#FFFFFF"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

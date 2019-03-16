@@ -8,14 +8,14 @@
     android:padding="5dp">
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="25dp"
+        android:layout_height="30dp"
         android:layout_weight="2"
         android:paddingLeft="10dp">
 
         <ImageView
             android:id="@+id/imageViewImage"
-            android:layout_width="25dp"
-            android:layout_height="25dp"/>
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
 
     </LinearLayout>
 
@@ -24,6 +24,6 @@
         android:layout_weight="8"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textSize="15sp"/>
+        android:textSize="18sp"/>
 
 </LinearLayout>

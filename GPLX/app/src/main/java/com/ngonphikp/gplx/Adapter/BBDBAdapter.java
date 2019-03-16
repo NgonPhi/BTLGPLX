@@ -8,26 +8,28 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ngonphikp.gplx.Model.BienBaoDuongBo;
+import com.ngonphikp.gplx.Model.BBDB;
 import com.ngonphikp.gplx.R;
+import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BBDBAdapter extends BaseAdapter {
 
     private Context context;
     private int layout;
-    private List<BienBaoDuongBo> BienBaoDuongBoList;
+    private ArrayList<BBDB> BBDBList;
 
-    public BBDBAdapter(Context context, int layout, List<BienBaoDuongBo> bienBaoDuongBoList) {
+    public BBDBAdapter(Context context, int layout, ArrayList<BBDB> BBDBList) {
         this.context = context;
         this.layout = layout;
-        BienBaoDuongBoList = bienBaoDuongBoList;
+        this.BBDBList = BBDBList;
     }
 
     @Override
     public int getCount() {
-        return BienBaoDuongBoList.size();
+        return BBDBList.size();
     }
 
     @Override
@@ -51,11 +53,9 @@ public class BBDBAdapter extends BaseAdapter {
         ImageView imgHinh = (ImageView) convertView.findViewById(R.id.imageviewHinh);
 
         //gán giá trị
-        BienBaoDuongBo bienBaoDuongBo = BienBaoDuongBoList.get(position);
-
-        txtTen.setText(bienBaoDuongBo.getTen());
-        txtMoTa.setText(bienBaoDuongBo.getMota());
-        imgHinh.setImageResource(bienBaoDuongBo.getHinh());
+        txtTen.setText(BBDBList.get(position).getTieuDe());
+        txtMoTa.setText(BBDBList.get(position).getNoiDung());
+        Picasso.with(context).load(BBDBList.get(position).getHinhAnh()).into(imgHinh);
         return convertView;
     }
 }
