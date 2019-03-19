@@ -8,26 +8,26 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ngonphikp.gplx.Model.ItemLeftMenu;
+import com.ngonphikp.gplx.Model.MeoThi;
 import com.ngonphikp.gplx.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LeftMenuAdapter extends BaseAdapter {
+public class MeoThiAdapter extends BaseAdapter {
     private Context context;
     private int layout;
-    private ArrayList<ItemLeftMenu> LeftMenuList;
+    private ArrayList<MeoThi> MeoThiList;
 
-    public LeftMenuAdapter(Context context, int layout, ArrayList<ItemLeftMenu> leftMenuList) {
+    public MeoThiAdapter(Context context, int layout, ArrayList<MeoThi> MeoThiList) {
         this.context = context;
         this.layout = layout;
-        this.LeftMenuList = leftMenuList;
+        this.MeoThiList = MeoThiList;
     }
 
     @Override
     public int getCount() {
-        return LeftMenuList.size();
+        return MeoThiList.size();
     }
 
     @Override
@@ -46,11 +46,13 @@ public class LeftMenuAdapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = inflater.inflate(layout, null);
         //ánh xạ view
-        TextView txtContent =(TextView) convertView.findViewById(R.id.textViewContent);
-        ImageView imgImage = (ImageView) convertView.findViewById(R.id.imageViewImage);
+        ImageView img = (ImageView)convertView.findViewById(R.id.imageViewBackGround);
+        TextView txt = (TextView)convertView.findViewById(R.id.textViewContent);
+
         //gán giá trị
-        txtContent.setText(LeftMenuList.get(position).getContent());
-        imgImage.setImageResource(LeftMenuList.get(position).getImage());
+        img.setImageResource(MeoThiList.get(position).getHinhAnh());
+        txt.setText(MeoThiList.get(position).getTieuDe());
+
         return convertView;
     }
 }

@@ -1,24 +1,21 @@
 package com.ngonphikp.gplx.Activity;
 
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 
-import com.ngonphikp.gplx.Adapter.PageBBAdapter;
-import com.ngonphikp.gplx.Fragment.Fragment_bbdb;
 import com.ngonphikp.gplx.R;
 import com.ngonphikp.gplx.Service.APIService;
 import com.ngonphikp.gplx.Service.Dataservice;
@@ -30,37 +27,46 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BBDBActivity extends AppCompatActivity {
+public class CTMTActivity extends AppCompatActivity {
 
-    android.support.v7.widget.Toolbar toolbar;
-    ViewPager viewPager;
-    TabLayout tab;
+    Toolbar toolbar;
+    ListView listViewKNQT;
+    ArrayList<String> arrayCourse;
+    ImageView imgMeoThi;
     ProgressBar progressBar;
+
+    String loai = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bbdb);
+        setContentView(R.layout.activity_ctmt);
 
         AnhXa();
-        SetupViewPager();
-        SetToolbar();
+        getData();
+        setToolbar();
     }
 
-    private void SetupViewPager() {
-        final PageBBAdapter pageAdapter = new PageBBAdapter(getSupportFragmentManager());
+    private void getData() {
+        Intent intent = getIntent();
+        loai = intent.getStringExtra("loai");
+        int hinhAnh = intent.getIntExtra("hinhAnh", 0);
+        imgMeoThi.setImageResource(hinhAnh);
         Dataservice dataservice = APIService.getService();
-        Call<List<String>> callback = dataservice.GetTypeBBDB();
+        Call<List<String>> callback = dataservice.GetCTMTbyType(loai);
         callback.enqueue(new Callback<List<String>>() {
             @Override
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
-                ArrayList<String> DSTitle = (ArrayList<String>) response.body();
-                for (int i = 0; i < DSTitle.size(); i++)
-                    pageAdapter.add(Fragment_bbdb.newInstance(DSTitle.get(i)), DSTitle.get(i));
-                viewPager.setAdapter(pageAdapter);
-                tab.setupWithViewPager(viewPager);
+                arrayCourse = new ArrayList<>();
+                ArrayList<String> data = (ArrayList<String>) response.body();
+                for (int i = 0; i < data.size(); i++){
+                    arrayCourse.add(i + ".   " + data.get(i));
+                }
+                ArrayAdapter adapter = new ArrayAdapter(CTMTActivity.this,android.R.layout.simple_list_item_1, arrayCourse);
+                listViewKNQT.setAdapter(adapter);
                 progressBar.setVisibility(View.GONE);
             }
+
             @Override
             public void onFailure(Call<List<String>> call, Throwable t) {
                 Log.d("Tag", t.getMessage());
@@ -69,13 +75,11 @@ public class BBDBActivity extends AppCompatActivity {
         });
     }
 
-    // Set toolbar thay cho actionbar
-    private void SetToolbar() {
+    private void setToolbar() {
         //Set lại title
-        toolbar.setTitle("Biển báo giao thông");
+        toolbar.setTitle(loai);
         setSupportActionBar(toolbar);
-
-        //Thêm nút navigation và thay đổi icon
+        //Thêm nút Navigation và Thay đổi icon
         //Lấy chiều cao của ActionBar
         TypedArray styledAttributes =
                 getTheme().obtainStyledAttributes(new int[] { android.R.attr.actionBarSize });
@@ -98,40 +102,10 @@ public class BBDBActivity extends AppCompatActivity {
         });
     }
 
-    // Liên kết menu tạo bên res
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_search, menu);
-
-        //Lấy search view
-        MenuItem menuItem = menu.findItem(R.id.menuSearch);
-        SearchView searchView = (SearchView) menuItem.getActionView();
-
-        //Set search view
-        searchView.setQueryHint("Tìm kiếm biển báo ...");
-        searchView.setMaxWidth(Integer.MAX_VALUE);
-
-        //Bắt sự kiện search view
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
-            }
-            @Override
-            public boolean onQueryTextChange(String s) {
-                Log.d("Tag", s);
-                return false;
-            }
-        });
-        return true;
-    }
-
     private void AnhXa() {
-        toolbar = findViewById(R.id.toolbar);
-        viewPager = findViewById(R.id.viewPager);
-        tab = findViewById(R.id.tab);
+        toolbar=findViewById(R.id.toolbar);
+        imgMeoThi = (ImageView) findViewById(R.id.imageViewMeoThi);
+        listViewKNQT = (ListView) findViewById(R.id.listViewKNQT);
         progressBar = findViewById(R.id.progressBar);
     }
-
 }

@@ -1,58 +1,75 @@
 package com.ngonphikp.gplx.Model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class Luat {
 
-    private String ten;
-    private String moTa;
-    private String tienPhat;
-    private int hinhAnh;
-    private String loai;
+@SerializedName("Id")
+@Expose
+private String id;
+@SerializedName("TieuDe")
+@Expose
+private String tieuDe;
+@SerializedName("HinhAnh")
+@Expose
+private String hinhAnh;
+@SerializedName("NoiDung")
+@Expose
+private String noiDung;
+@SerializedName("Loai")
+@Expose
+private String loai;
+@SerializedName("TienPhat")
+@Expose
+private String tienPhat;
 
-    public String getTen() {
-        return ten;
-    }
+public String getId() {
+return id;
+}
 
-    public void setTen(String ten) {
-        this.ten = ten;
-    }
+public void setId(String id) {
+this.id = id;
+}
 
-    public String getMoTa() {
-        return moTa;
-    }
+public String getTieuDe() {
+return tieuDe;
+}
 
-    public void setMoTa(String moTa) {
-        this.moTa = moTa;
-    }
+public void setTieuDe(String tieuDe) {
+this.tieuDe = tieuDe;
+}
 
-    public String getTienPhat() {
-        return tienPhat;
-    }
+public String getHinhAnh() {
+return hinhAnh;
+}
 
-    public void setTienPhat(String tienPhat) {
-        this.tienPhat = tienPhat;
-    }
+public void setHinhAnh(String hinhAnh) {
+this.hinhAnh = hinhAnh;
+}
 
-    public int getHinhAnh() {
-        return hinhAnh;
-    }
+public String getNoiDung() {
+return noiDung;
+}
 
-    public void setHinhAnh(int hinhAnh) {
-        this.hinhAnh = hinhAnh;
-    }
+public void setNoiDung(String noiDung) {
+this.noiDung = noiDung;
+}
 
-    public String getLoai() {
-        return loai;
-    }
+public String getLoai() {
+return loai;
+}
 
-    public void setLoai(String loai) {
-        this.loai = loai;
-    }
+public void setLoai(String loai) {
+this.loai = loai;
+}
 
-    public Luat(String ten, String moTa, String tienPhat, int hinhAnh, String loai) {
-        this.ten = ten;
-        this.moTa = moTa;
-        this.tienPhat = tienPhat;
-        this.hinhAnh = hinhAnh;
-        this.loai = loai;
-    }
+public String getTienPhat() {
+return tienPhat;
+}
+
+public void setTienPhat(String tienPhat) {
+this.tienPhat = tienPhat;
+}
+
 }

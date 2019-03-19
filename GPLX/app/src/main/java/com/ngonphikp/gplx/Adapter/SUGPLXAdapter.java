@@ -13,13 +13,14 @@ import com.ngonphikp.gplx.Activity.SetUpGPLXActivity;
 import com.ngonphikp.gplx.Model.SetUpGPLX;
 import com.ngonphikp.gplx.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SUGPLXAdapter extends BaseAdapter {
 
     private Context context;
     private int layout;
-    private List<SetUpGPLX> SUGPLXList;
+    private ArrayList<SetUpGPLX> SUGPLXList;
 
     private int selectedPosition = -1;
 
@@ -35,7 +36,7 @@ public class SUGPLXAdapter extends BaseAdapter {
         }
     }
 
-    public SUGPLXAdapter(Context context, int layout, List<SetUpGPLX> SUGPLXList) {
+    public SUGPLXAdapter(Context context, int layout, ArrayList<SetUpGPLX> SUGPLXList) {
         this.context = context;
         this.layout = layout;
         this.SUGPLXList = SUGPLXList;

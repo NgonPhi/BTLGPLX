@@ -10,15 +10,16 @@ import android.widget.TextView;
 import com.ngonphikp.gplx.Model.ThiSatHach;
 import com.ngonphikp.gplx.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TSHAdapter extends BaseAdapter {
 
     private Context context;
     private int layout;
-    private List<ThiSatHach> TSHList;
+    private ArrayList<ThiSatHach> TSHList;
 
-    public TSHAdapter(Context context, int layout, List<ThiSatHach> TSHList) {
+    public TSHAdapter(Context context, int layout, ArrayList<ThiSatHach> TSHList) {
         this.context = context;
         this.layout = layout;
         this.TSHList = TSHList;

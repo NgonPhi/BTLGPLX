@@ -11,18 +11,19 @@ import android.widget.TextView;
 import com.ngonphikp.gplx.Model.HocLyThuyet;
 import com.ngonphikp.gplx.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HLTAdapter extends BaseAdapter {
 
     private Context context;
     private int layout;
-    private List<HocLyThuyet> HocLyThuyetList;
+    private ArrayList<HocLyThuyet> HocLyThuyetList;
 
-    public HLTAdapter(Context context, int layout, List<HocLyThuyet> hocLyThuyetList) {
+    public HLTAdapter(Context context, int layout, ArrayList<HocLyThuyet> hocLyThuyetList) {
         this.context = context;
         this.layout = layout;
-        HocLyThuyetList = hocLyThuyetList;
+        this.HocLyThuyetList = hocLyThuyetList;
     }
 
     @Override

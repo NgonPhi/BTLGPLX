@@ -11,9 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -22,7 +20,6 @@ import android.widget.Toast;
 
 import com.ngonphikp.gplx.Adapter.AnswerAdapter;
 import com.ngonphikp.gplx.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 

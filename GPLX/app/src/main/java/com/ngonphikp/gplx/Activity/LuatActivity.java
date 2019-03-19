@@ -14,19 +14,29 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.ProgressBar;
 
 import com.ngonphikp.gplx.Adapter.LuatAdapter;
 import com.ngonphikp.gplx.Model.Luat;
 import com.ngonphikp.gplx.R;
+import com.ngonphikp.gplx.Service.APIService;
+import com.ngonphikp.gplx.Service.Dataservice;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LuatActivity extends AppCompatActivity {
     android.support.v7.widget.Toolbar toolbar;
+    ProgressBar progressBar;
     ListView lvLuat;
+    ArrayList<Luat> data;
     LuatAdapter adapter;
-    ArrayList<Luat> arrayList;
+
+    String loai;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +80,7 @@ public class LuatActivity extends AppCompatActivity {
 
     private void SetToolBar() {
         //Set lại title
-        toolbar.setTitle("Luật giao thông");
+        toolbar.setTitle(loai);
         setSupportActionBar(toolbar);
         //Thêm nút navigation
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -97,33 +107,32 @@ public class LuatActivity extends AppCompatActivity {
     }
 
     private void GetData() {
-        ArrayList<Luat> data = new ArrayList<>();
-        data.add(new Luat("Ten 1", "Mo Ta 1", "1000000 - 2000000", R.drawable.loixemay, "Xe Máy"));
-        data.add(new Luat("Ten 2", "Mo Ta 2", "1000000 - 2000000", R.drawable.loixemay, "Xe Máy"));
-        data.add(new Luat("Ten 3", "Mo Ta 3", "1000000 - 2000000", R.drawable.loixemay, "Xe Máy"));
-        data.add(new Luat("Ten 4", "Mo Ta 4", "1000000 - 2000000", R.drawable.loixemay, "Xe Máy"));
-        data.add(new Luat("Ten 5", "Mo Ta 5", "1000000 - 2000000", R.drawable.loixemay, "Xe Máy"));
-
-        data.add(new Luat("Ten 1", "Mo Ta 1", "1000000 - 2000000", R.drawable.loioto, "Ô Tô"));
-        data.add(new Luat("Ten 2", "Mo Ta 2", "1000000 - 2000000", R.drawable.loioto, "Ô Tô"));
-        data.add(new Luat("Ten 3", "Mo Ta 3", "1000000 - 2000000", R.drawable.loioto, "Ô Tô"));
-        data.add(new Luat("Ten 4", "Mo Ta 4", "1000000 - 2000000", R.drawable.loioto, "Ô Tô"));
-        data.add(new Luat("Ten 5", "Mo Ta 5", "1000000 - 2000000", R.drawable.loioto, "Ô Tô"));
-
-        String loai = getIntent().getStringExtra("loai");
-        arrayList = new ArrayList<>();
-        for(int i = 0; i < data.size(); i++){
-            if(loai.equals(data.get(i).getLoai())){
-                arrayList.add(data.get(i));
+        loai = getIntent().getStringExtra("loai");
+        Dataservice dataservice = APIService.getService();
+        Call<List<Luat>> callback = dataservice.GetLuatbyType(loai);
+        data = new ArrayList<>();
+        callback.enqueue(new Callback<List<Luat>>() {
+            @Override
+            public void onResponse(Call<List<Luat>> call, Response<List<Luat>> response) {
+                data = (ArrayList<Luat>) response.body();
+                adapter = new LuatAdapter(LuatActivity.this, R.layout.dong_tra_cuu_luat, data);
+                lvLuat.setAdapter(adapter);
+                progressBar.setVisibility(View.GONE);
             }
-        }
-        adapter = new LuatAdapter(this, R.layout.dong_tra_cuu_luat, arrayList);
-        lvLuat.setAdapter(adapter);
+
+            @Override
+            public void onFailure(Call<List<Luat>> call, Throwable t) {
+                Log.d("Tag", t.getMessage());
+                t.printStackTrace();
+            }
+        });
+
     }
 
     private void AnhXa() {
         //Ánh xạ listView và toolBar
         toolbar = findViewById(R.id.toolbar);
         lvLuat = (ListView) findViewById(R.id.listViewLuat);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
     }
 }

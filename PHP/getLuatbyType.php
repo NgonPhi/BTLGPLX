@@ -2,30 +2,31 @@
     include "connect.php";
 
     //Tạo Class
-    class BBDB{
-        function BBDB($id, $tieuDe, $noiDung, $hinhAnh, $loai){
+    class Luat{
+        function Luat($id, $tieuDe, $hinhAnh, $noiDung, $loai, $tienPhat){
             $this->Id = $id;
-            $this->TieuDe = $tieuDe;
-            $this->NoiDung = $noiDung;
+            $this->TieuDe = $tieuDe;            
             $this->HinhAnh = $hinhAnh;
+            $this->NoiDung = $noiDung;
             $this->Loai = $loai;
+            $this->TienPhat = $tienPhat;
         }
     }
 
     //Tạo mảng
     $mang = array();  
 
-    // $_POST['loai'] = "Biển báo cấm";
+    // $_POST['loai'] = "Xe Máy";
 
     //Thực hiện truy vấn
     if (isset($_POST['loai'])) {
         $loai = $_POST['loai'];        
-        $sql = "SELECT * FROM BBDB WHERE loai = '$loai'";
+        $sql = "SELECT * FROM Luat WHERE loai = '$loai'";
         $result = $conn->query($sql);
         foreach ($result as $row) {
             //Thêm vào mảng
-            $mang[] = new BBDB($row['id'], $row['tieuDe'], $row['noiDung'], $row['hinhAnh'], $row['loai']);        
-        }        
+            $mang[] = new Luat($row["id"], $row["tieuDe"], $row["hinhAnh"], $row["noiDung"], $row["loai"], $row['tienPhat']);
+        }       
     }
 
     //Xuất dạng JSON

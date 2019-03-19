@@ -21,7 +21,7 @@ public class AnswerAdapter extends BaseAdapter {
     public AnswerAdapter(Context context, int layout, ArrayList<String> answerList) {
         this.context = context;
         this.layout = layout;
-        AnswerList = answerList;
+        this.AnswerList = answerList;
     }
 
     @Override

@@ -5,21 +5,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.ngonphikp.gplx.Model.BBDB;
 import com.ngonphikp.gplx.Model.Luat;
+import com.ngonphikp.gplx.R;
+import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Callback;
 
 public class LuatAdapter extends BaseAdapter {
 
     private Context context;
     private int layout;
-    private List<Luat> LuatList;
+    private ArrayList<Luat> LuatList;
 
-    public LuatAdapter(Context context, int layout, List<Luat> luatList) {
+    public LuatAdapter(Context context, int layout, ArrayList<Luat> luatList) {
         this.context = context;
         this.layout = layout;
-        LuatList = luatList;
+        this.LuatList = luatList;
     }
 
     @Override
@@ -44,10 +52,16 @@ public class LuatAdapter extends BaseAdapter {
         convertView = inflater.inflate(layout, null);
 
         //Ánh xạ
-
+        ImageView img = convertView.findViewById(R.id.imageviewHinhLuat);
+        TextView txtTieuDe = convertView.findViewById(R.id.textviewTenLuat);
+        TextView txtNoiDung = convertView.findViewById(R.id.textviewMoTaLuat);
+        TextView txtTienPhat = convertView.findViewById(R.id.textViewTienPhat);
 
         //Gán giá trị
-
+        txtTieuDe.setText(LuatList.get(position).getTieuDe());
+        txtNoiDung.setText(LuatList.get(position).getNoiDung());
+        txtTienPhat.setText(LuatList.get(position).getTienPhat());
+        Picasso.with(context).load(LuatList.get(position).getHinhAnh()).into(img);
 
         return convertView;
     }
