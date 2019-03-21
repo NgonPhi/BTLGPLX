@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
@@ -26,6 +27,7 @@ import com.ngonphikp.gplx.Service.Dataservice;
 import java.util.ArrayList;
 import java.util.List;
 
+import dmax.dialog.SpotsDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -35,12 +37,15 @@ public class BBDBActivity extends AppCompatActivity {
     android.support.v7.widget.Toolbar toolbar;
     ViewPager viewPager;
     TabLayout tab;
-    ProgressBar progressBar;
+    SpotsDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bbdb);
+
+        progressDialog = new SpotsDialog(BBDBActivity.this, R.style.Custom);
+        progressDialog.show();
 
         AnhXa();
         SetupViewPager();
@@ -59,7 +64,7 @@ public class BBDBActivity extends AppCompatActivity {
                     pageAdapter.add(Fragment_bbdb.newInstance(DSTitle.get(i)), DSTitle.get(i));
                 viewPager.setAdapter(pageAdapter);
                 tab.setupWithViewPager(viewPager);
-                progressBar.setVisibility(View.GONE);
+                progressDialog.dismiss();
             }
             @Override
             public void onFailure(Call<List<String>> call, Throwable t) {
@@ -94,6 +99,7 @@ public class BBDBActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                overridePendingTransition(R.anim.slide_out, R.anim.slide_in);
             }
         });
     }
@@ -131,7 +137,6 @@ public class BBDBActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         viewPager = findViewById(R.id.viewPager);
         tab = findViewById(R.id.tab);
-        progressBar = findViewById(R.id.progressBar);
     }
 
 }

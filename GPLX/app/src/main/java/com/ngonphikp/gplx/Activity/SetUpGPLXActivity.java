@@ -66,6 +66,7 @@ public class SetUpGPLXActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                overridePendingTransition(R.anim.slide_out, R.anim.slide_in);
             }
         });
     }

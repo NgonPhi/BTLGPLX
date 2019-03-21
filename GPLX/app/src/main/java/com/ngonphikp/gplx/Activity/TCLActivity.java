@@ -51,6 +51,7 @@ public class TCLActivity extends AppCompatActivity {
         Intent intent = new Intent(TCLActivity.this, LuatActivity.class);
         intent.putExtra("loai", str);
         startActivity(intent);
+        overridePendingTransition(R.anim.slide_out, R.anim.slide_in);
     }
     private void AnhXa() {
         itemLXM = findViewById(R.id.itemloixemay);

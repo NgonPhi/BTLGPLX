@@ -222,30 +222,36 @@ public class MainActivity extends AppCompatActivity {
     private void OpenTSHActivity(){
         Intent intent = new Intent(MainActivity.this, TSHActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.slide_out, R.anim.slide_in);
     }
 
     private void OpenBBDBActivity(){
         Intent intent = new Intent(MainActivity.this, BBDBActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.slide_out, R.anim.slide_in);
     }
 
     private void OpenHLTActivity(){
         Intent intent = new Intent(MainActivity.this, HLTActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.slide_out, R.anim.slide_in);
     }
 
     private void OpenTCLActivity(){
         Intent intent = new Intent(MainActivity.this, TCLActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.slide_out, R.anim.slide_in);
     }
 
     private void OpenMTActivity(){
         Intent intent = new Intent(MainActivity.this, MTActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.slide_out, R.anim.slide_in);
     }
 
     private void OpenCCSActivity(){
         Intent intent = new Intent(MainActivity.this, CCSActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.slide_out, R.anim.slide_in);
     }
 }

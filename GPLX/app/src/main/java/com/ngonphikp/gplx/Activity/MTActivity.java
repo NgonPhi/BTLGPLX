@@ -60,6 +60,7 @@ public class MTActivity extends AppCompatActivity {
                 intent.putExtra("hinhAnh", arrayMeoThi.get(position).getHinhAnh());
                 intent.putExtra("loai", arrayMeoThi.get(position).getTieuDe());
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_out, R.anim.slide_in);
             }
         });
     }
@@ -89,6 +90,7 @@ public class MTActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                overridePendingTransition(R.anim.slide_out, R.anim.slide_in);
             }
         });
     }
