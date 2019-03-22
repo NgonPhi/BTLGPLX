@@ -8,19 +8,17 @@ import android.widget.BaseAdapter;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.ngonphikp.gplx.Activity.MainActivity;
 import com.ngonphikp.gplx.Activity.SetUpGPLXActivity;
-import com.ngonphikp.gplx.Model.SetUpGPLX;
+import com.ngonphikp.gplx.Model.Bang;
 import com.ngonphikp.gplx.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SUGPLXAdapter extends BaseAdapter {
 
     private Context context;
     private int layout;
-    private ArrayList<SetUpGPLX> SUGPLXList;
+    private ArrayList<Bang> SUGPLXList;
 
     private int selectedPosition = -1;
 
@@ -30,13 +28,13 @@ public class SUGPLXAdapter extends BaseAdapter {
 
     public void setSelectedPosition(String level) {
         for(int i = 0; i < SUGPLXList.size(); i++){
-            if (SUGPLXList.get(i).getType().equals(level)){
+            if (SUGPLXList.get(i).getTen().equals(level)){
                 this.selectedPosition = i;
             }
         }
     }
 
-    public SUGPLXAdapter(Context context, int layout, ArrayList<SetUpGPLX> SUGPLXList) {
+    public SUGPLXAdapter(Context context, int layout, ArrayList<Bang> SUGPLXList) {
         this.context = context;
         this.layout = layout;
         this.SUGPLXList = SUGPLXList;
@@ -68,8 +66,8 @@ public class SUGPLXAdapter extends BaseAdapter {
         TextView txtContent = (TextView) convertView.findViewById(R.id.textViewContent);
         RadioButton radioBtn = (RadioButton) convertView.findViewById(R.id.radioButton);
         //gán giá trị
-        txtType.setText("Bằng " + SUGPLXList.get(position).getType());
-        txtContent.setText(SUGPLXList.get(position).getContent());
+        txtType.setText("Bằng " + SUGPLXList.get(position).getTen());
+        txtContent.setText(SUGPLXList.get(position).getNoiDung());
 
         //check the radio button if both position and selectedPosition matches
         radioBtn.setChecked(position == selectedPosition);

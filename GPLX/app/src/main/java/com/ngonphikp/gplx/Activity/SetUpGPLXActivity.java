@@ -14,7 +14,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.ngonphikp.gplx.Adapter.SUGPLXAdapter;
-import com.ngonphikp.gplx.Model.SetUpGPLX;
+import com.ngonphikp.gplx.Model.Bang;
 import com.ngonphikp.gplx.R;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class SetUpGPLXActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
 
     ListView lvSUGPLX;
-    ArrayList<SetUpGPLX> arraySUGPLX;
+    ArrayList<Bang> arraySUGPLX;
     SUGPLXAdapter adapter;
 
     String level;
@@ -38,7 +38,15 @@ public class SetUpGPLXActivity extends AppCompatActivity {
 
         AnhXa();
         GetData();
+        GetDataLocal();
         SetToolbar();
+    }
+
+    //Lấy dữ liệu trong data local (sharedPrefences)
+    private void GetDataLocal() {
+        sharedPreferences = getSharedPreferences("LocalData", Context.MODE_PRIVATE);
+        level = sharedPreferences.getString("Level", "A1");
+        adapter.setSelectedPosition(level);
     }
 
     // Set toolbar thay cho actionbar
@@ -79,23 +87,17 @@ public class SetUpGPLXActivity extends AppCompatActivity {
     private void GetData() {
         arraySUGPLX = new ArrayList<>();
 
-        arraySUGPLX.add(new SetUpGPLX("A1", "Xe máy"));
-        arraySUGPLX.add(new SetUpGPLX("A2", "Xe mô tô 2 bánh"));
-        arraySUGPLX.add(new SetUpGPLX("A3", "Xe mô tô 3 bánh, xe lam..."));
-        arraySUGPLX.add(new SetUpGPLX("B1", "Ô tô tải trọng dưới 3500kg"));
-        arraySUGPLX.add(new SetUpGPLX("B2", "Ô tô chở người đến 9 chỗ"));
-        arraySUGPLX.add(new SetUpGPLX("C", "Ô tô tải trên 3.500kg"));
-        arraySUGPLX.add(new SetUpGPLX("D", "Ô tô chở người 10 đến 30 chỗ"));
-        arraySUGPLX.add(new SetUpGPLX("E", "Ô tô chở người trên 30 chỗ"));
-        arraySUGPLX.add(new SetUpGPLX("F", "Điều khiển các loại kéo móc"));
+        arraySUGPLX.add(new Bang("A1", "Xe máy"));
+        arraySUGPLX.add(new Bang("A2", "Xe mô tô 2 bánh"));
+        arraySUGPLX.add(new Bang("A3", "Xe mô tô 3 bánh, xe lam..."));
+        arraySUGPLX.add(new Bang("B1", "Ô tô tải trọng dưới 3500kg"));
+        arraySUGPLX.add(new Bang("B2", "Ô tô chở người đến 9 chỗ"));
+        arraySUGPLX.add(new Bang("C", "Ô tô tải trên 3.500kg"));
+        arraySUGPLX.add(new Bang("D", "Ô tô chở người 10 đến 30 chỗ"));
+        arraySUGPLX.add(new Bang("E", "Ô tô chở người trên 30 chỗ"));
+        arraySUGPLX.add(new Bang("F", "Điều khiển các loại kéo móc"));
 
         adapter = new SUGPLXAdapter(this, R.layout.dong_set_up_gplx, arraySUGPLX);
-
-        //Lấy dữ liệu trong data
-        sharedPreferences = getSharedPreferences("LocalData", Context.MODE_PRIVATE);
-        level = sharedPreferences.getString("Level", "A1");
-        adapter.setSelectedPosition(level);
-
         lvSUGPLX.setAdapter(adapter);
     }
 
@@ -103,10 +105,10 @@ public class SetUpGPLXActivity extends AppCompatActivity {
     public void CallMethod(int pos) {
         //Lưu lại vào data
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("Level", arraySUGPLX.get(pos).getType());
+        editor.putString("Level", arraySUGPLX.get(pos).getTen());
         editor.commit();
 
         //Hiển thị toast
-        Toast.makeText(this, "Chọn " + arraySUGPLX.get(pos).getType(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Chọn " + arraySUGPLX.get(pos).getTen(), Toast.LENGTH_SHORT).show();
     }
 }

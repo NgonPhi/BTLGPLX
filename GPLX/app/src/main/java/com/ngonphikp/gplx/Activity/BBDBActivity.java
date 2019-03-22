@@ -53,7 +53,10 @@ public class BBDBActivity extends AppCompatActivity {
         AnhXa();
         SetupViewPager();
         SetToolbar();
+        ChangePos();
+    }
 
+    private void ChangePos() {
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
