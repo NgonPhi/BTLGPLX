@@ -66,12 +66,12 @@ public class LuatActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                Log.d("Tag", s);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
+                adapter.filter(s.trim());
                 return false;
             }
         });

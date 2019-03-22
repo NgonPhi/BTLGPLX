@@ -9,22 +9,27 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ngonphikp.gplx.Model.BBDB;
+import com.ngonphikp.gplx.Model.Luat;
 import com.ngonphikp.gplx.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class BBDBAdapter extends BaseAdapter {
 
     private Context context;
     private int layout;
-    private ArrayList<BBDB> BBDBList;
+    private List<BBDB> BBDBList;
+    private ArrayList<BBDB> arrayList;
 
-    public BBDBAdapter(Context context, int layout, ArrayList<BBDB> BBDBList) {
+    public BBDBAdapter(Context context, int layout, List<BBDB> BBDBList) {
         this.context = context;
         this.layout = layout;
         this.BBDBList = BBDBList;
+        this.arrayList = new ArrayList<>();
+        this.arrayList.addAll(BBDBList);
     }
 
     @Override
@@ -57,5 +62,24 @@ public class BBDBAdapter extends BaseAdapter {
         txtMoTa.setText(BBDBList.get(position).getNoiDung());
         Picasso.with(context).load(BBDBList.get(position).getHinhAnh()).into(imgHinh);
         return convertView;
+    }
+
+    public void filter(String charText){
+        charText = charText.toLowerCase(Locale.getDefault());
+        BBDBList.clear();
+        if (charText.length() == 0){
+            BBDBList.addAll(arrayList);
+        }
+        else{
+            for (BBDB bbdb : arrayList) {
+                if (bbdb.getTieuDe().toLowerCase(Locale.getDefault()).contains(charText)) {
+                    BBDBList.add(bbdb);
+                }
+                else if (bbdb.getNoiDung().toLowerCase(Locale.getDefault()).contains(charText)) {
+                    BBDBList.add(bbdb);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 }

@@ -15,6 +15,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Callback;
 
@@ -22,12 +23,15 @@ public class LuatAdapter extends BaseAdapter {
 
     private Context context;
     private int layout;
-    private ArrayList<Luat> LuatList;
+    private List<Luat> LuatList;
+    private ArrayList<Luat> arrayList;
 
-    public LuatAdapter(Context context, int layout, ArrayList<Luat> luatList) {
+    public LuatAdapter(Context context, int layout, List<Luat> luatList) {
         this.context = context;
         this.layout = layout;
         this.LuatList = luatList;
+        this.arrayList = new ArrayList<>();
+        this.arrayList.addAll(LuatList);
     }
 
     @Override
@@ -65,4 +69,27 @@ public class LuatAdapter extends BaseAdapter {
 
         return convertView;
     }
+
+    public void filter(String charText){
+        charText = charText.toLowerCase(Locale.getDefault());
+        LuatList.clear();
+        if (charText.length() == 0){
+            LuatList.addAll(arrayList);
+        }
+        else{
+            for (Luat luat : arrayList) {
+                if (luat.getTieuDe().toLowerCase(Locale.getDefault()).contains(charText)) {
+                    LuatList.add(luat);
+                }
+                else if (luat.getNoiDung().toLowerCase(Locale.getDefault()).contains(charText)) {
+                    LuatList.add(luat);
+                }
+                else if (luat.getTienPhat().toLowerCase(Locale.getDefault()).contains(charText)) {
+                    LuatList.add(luat);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
+
 }

@@ -86,4 +86,8 @@ public class Fragment_bbdb extends Fragment {
         lvBienBaoDuongBo = (ListView) view.findViewById(R.id.listViewBienBaoDuongBo);
         progressBar = view.findViewById(R.id.progressBar);
     }
+
+    public void filter(String s){
+        adapter.filter(s);
+    }
 }

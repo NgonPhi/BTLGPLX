@@ -5,15 +5,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.ngonphikp.gplx.Fragment.Fragment_bbdb;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class PageAdapter extends FragmentStatePagerAdapter {
 
-    private List<Fragment> fragmentList = new ArrayList<>();
+    private List<Fragment_bbdb> fragmentList = new ArrayList<>();
     private List<String> titleList = new ArrayList<>();
 
-    public void add(Fragment fragment, String title){
+    public void add(Fragment_bbdb fragment, String title){
         fragmentList.add(fragment);
         titleList.add(title);
     }
@@ -23,7 +25,7 @@ public class PageAdapter extends FragmentStatePagerAdapter {
     }
 
     @Override
-    public Fragment getItem(int i) {
+    public Fragment_bbdb getItem(int i) {
         return fragmentList.get(i);
     }
 

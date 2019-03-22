@@ -17,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.ngonphikp.gplx.Adapter.PageBBAdapter;
 import com.ngonphikp.gplx.Fragment.Fragment_bbdb;
@@ -36,8 +37,10 @@ public class BBDBActivity extends AppCompatActivity {
 
     android.support.v7.widget.Toolbar toolbar;
     ViewPager viewPager;
+    PageBBAdapter pageAdapter;
     TabLayout tab;
     SpotsDialog progressDialog;
+    int pos = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +53,27 @@ public class BBDBActivity extends AppCompatActivity {
         AnhXa();
         SetupViewPager();
         SetToolbar();
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                pos = i;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
     }
 
     private void SetupViewPager() {
-        final PageBBAdapter pageAdapter = new PageBBAdapter(getSupportFragmentManager());
+        pageAdapter = new PageBBAdapter(getSupportFragmentManager());
         Dataservice dataservice = APIService.getService();
         Call<List<String>> callback = dataservice.GetTypeBBDB();
         callback.enqueue(new Callback<List<String>>() {
@@ -122,11 +142,14 @@ public class BBDBActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
+                Fragment_bbdb fragment_bbdb = (Fragment_bbdb) viewPager.getAdapter().instantiateItem(viewPager, pos);
+                fragment_bbdb.filter(s.trim());
                 return false;
             }
             @Override
             public boolean onQueryTextChange(String s) {
-                Log.d("Tag", s);
+                Fragment_bbdb fragment_bbdb = (Fragment_bbdb) viewPager.getAdapter().instantiateItem(viewPager, pos);
+                fragment_bbdb.filter(s.trim());
                 return false;
             }
         });
