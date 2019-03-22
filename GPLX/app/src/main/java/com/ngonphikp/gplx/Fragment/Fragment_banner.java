@@ -41,11 +41,11 @@ public class Fragment_banner extends Fragment {
     private void GetData() {
         //Tạo list dữ liệu
         ArrayList<QuangCao> banners = new ArrayList<>();
-        banners.add(new QuangCao(R.drawable.bgtsh, "Thi trắc nhiệm ........"));
-        banners.add(new QuangCao(R.drawable.bghlt, "Học lý thuyết......."));
-        banners.add(new QuangCao(R.drawable.bgmt, "Mẹo thi ........"));
-        banners.add(new QuangCao(R.drawable.bgbb, "Biển báo ........"));
-        banners.add(new QuangCao(R.drawable.bgtcl, "Tra cứu luật ........"));
+        banners.add(new QuangCao(R.drawable.main1, "Thi thử giống đề thi thật"));
+        banners.add(new QuangCao(R.drawable.knqt, "Ôn tập lý thuyết chắc chắn đỗ"));
+        banners.add(new QuangCao(R.drawable.meothi, "Mẹo thi để được kết quả cao"));
+        banners.add(new QuangCao(R.drawable.bgbb, "Hệ thống biển báo đường bộ"));
+        banners.add(new QuangCao(R.drawable.bgtcl, "Tra cứu luật giao thông mới nhất"));
 
         //Liên kết viewPager và circleIndicator
         bannerAdapter = new BannerAdapter(getActivity(), banners);
