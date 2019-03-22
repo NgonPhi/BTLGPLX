@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Mar 19, 2019 at 03:22 AM
--- Server version: 10.1.37-MariaDB
--- PHP Version: 5.6.40
+-- Máy chủ: localhost:3306
+-- Thời gian đã tạo: Th3 22, 2019 lúc 10:00 AM
+-- Phiên bản máy phục vụ: 10.3.13-MariaDB
+-- Phiên bản PHP: 7.3.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,13 +19,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `gplx`
+-- Cơ sở dữ liệu: `id8713292_gplx`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Luat`
+-- Cấu trúc bảng cho bảng `Luat`
 --
 
 CREATE TABLE `Luat` (
@@ -38,7 +38,7 @@ CREATE TABLE `Luat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `Luat`
+-- Đang đổ dữ liệu cho bảng `Luat`
 --
 
 INSERT INTO `Luat` (`id`, `tieuDe`, `hinhAnh`, `noiDung`, `loai`, `tienPhat`) VALUES
@@ -66,29 +66,24 @@ INSERT INTO `Luat` (`id`, `tieuDe`, `hinhAnh`, `noiDung`, `loai`, `tienPhat`) VA
 (22, 'Đón trả hành khách trên đường cao tốc', 'https://androidwsv.000webhostapp.com/HinhAnh/TCL/xm3.png', 'Đón trả hành khách trên đường cao tốc', 'Xe Khách', '5.000.000 Đ - 6.000.000 Đ'),
 (23, 'Bắt, trả hành khách khi xe đang chạy', 'https://androidwsv.000webhostapp.com/HinhAnh/TCL/xm3.png', 'Để người lên, xuống xe khi xe đang chạy', 'Xe Khách', '1.000.000 Đ - 2.000.000 Đ'),
 (24, 'Xe có phù hiệu quốc tế vận tải bị hết hạn', 'https://androidwsv.000webhostapp.com/HinhAnh/TCL/xm5.png', 'Điều khiển xe có có giấy phép vận tải quốc tế hoặc đã hết hạn sử dụng', 'Xe Tải', '3.000.000 Đ - 5.000.000 Đ'),
-(25, 'Chở hàng vượt quá chiều cao xếp cho phép', 'https://androidwsv.000webhostapp.com/HinhAnh/TCL/xm3.png', 'Chở hàng vượt quá chiều cao xếp hàng cho phép đối với xe ô tô tải', 'Xe Tải', '2.000.000 Đ - 3.000.000 Đ'),
-(26, 'Chở hàng vượt chiều dài phía trước, sau thùng xe', 'https://androidwsv.000webhostapp.com/HinhAnh/TCL/xm3.png', 'Chở hàng trên nóc thùng xe, chở hàng vượt quá bề rộng thùng xe; chở hàng vượt phía trước, phía sau thùng xe trên 10% chiều dài xe', 'Xe Tải', '800.000 Đ - 1.000.000 Đ'),
-(27, 'Không thực hiện theo đúng quy định Giấy phép lưu hành', 'https://androidwsv.000webhostapp.com/HinhAnh/TCL/xm3.png', 'Không thực hiện đúng quy định trong giấy phéo lưu hành', 'Xe Tải', '1.000.000 Đ - 2.000.000 Đ'),
-(28, 'Vận chuyển hàng hóa nguye hiểm dừng ở nơi đông người', 'https://androidwsv.000webhostapp.com/HinhAnh/TCL/xm3.png', 'Vận hành hàng nguye hiểm mà dừng, đỗ xe nơi đông người, khu dân cư, công trình quan trọng; không có báo hiệu hàng nguy hiểm theo quy định', 'Xe Tải', '1.000.000 Đ - 2.000.000 Đ'),
-(29, 'Điều khiển xe chở hàng vượt giới hạn cầu, đường', 'https://androidwsv.000webhostapp.com/HinhAnh/TCL/xm3.png', 'Trực tiếp điều khiển phương tiện chở hàng vượt khổ giới hạn của cầu, đường ghi trong giấy phép lưu hành', 'Xe Tải', '6.000.000 Đ - 8.000.000 Đ'),
-(30, 'Giao xe cho người chưa đủ 27 tuổi điều khiển xe hạng D', 'https://androidwsv.000webhostapp.com/HinhAnh/TCL/xm3.png', 'Giao hoặc để cho người không đủ 27 tuổi điều khiển xe hạng D kéo rơ móoc', 'Xe Tải', '2.000.000 Đ - 4.000.000 Đ');
+(25, 'Chở hàng vượt quá chiều cao xếp cho phép', 'https://androidwsv.000webhostapp.com/HinhAnh/TCL/xm3.png', 'Chở hàng vượt quá chiều cao xếp hàng cho phép đối với xe ô tô tải', 'Xe Tải', '2.000.000 Đ - 3.000.000 Đ');
 
 --
--- Indexes for dumped tables
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `Luat`
+-- Chỉ mục cho bảng `Luat`
 --
 ALTER TABLE `Luat`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `Luat`
+-- AUTO_INCREMENT cho bảng `Luat`
 --
 ALTER TABLE `Luat`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
