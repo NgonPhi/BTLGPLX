@@ -7,7 +7,6 @@ import android.graphics.drawable.Drawable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
@@ -16,10 +15,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import com.ngonphikp.gplx.Adapter.PageBBAdapter;
+import com.ngonphikp.gplx.Adapter.PageAdapter;
 import com.ngonphikp.gplx.Fragment.Fragment_bbdb;
 import com.ngonphikp.gplx.R;
 import com.ngonphikp.gplx.Service.APIService;
@@ -37,7 +34,7 @@ public class BBDBActivity extends AppCompatActivity {
 
     android.support.v7.widget.Toolbar toolbar;
     ViewPager viewPager;
-    PageBBAdapter pageAdapter;
+    PageAdapter pageAdapter;
     TabLayout tab;
     SpotsDialog progressDialog;
     int pos = 0;
@@ -76,7 +73,7 @@ public class BBDBActivity extends AppCompatActivity {
     }
 
     private void SetupViewPager() {
-        pageAdapter = new PageBBAdapter(getSupportFragmentManager());
+        pageAdapter = new PageAdapter(getSupportFragmentManager());
         Dataservice dataservice = APIService.getService();
         Call<List<String>> callback = dataservice.GetTypeBBDB();
         callback.enqueue(new Callback<List<String>>() {

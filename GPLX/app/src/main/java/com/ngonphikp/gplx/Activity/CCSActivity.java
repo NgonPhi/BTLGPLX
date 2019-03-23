@@ -4,7 +4,10 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,27 +15,24 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ngonphikp.gplx.Adapter.AnswerAdapter;
+import com.ngonphikp.gplx.Adapter.PageAdapter;
+import com.ngonphikp.gplx.Fragment.Fragment_thi;
 import com.ngonphikp.gplx.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CCSActivity extends AppCompatActivity {
 
     android.support.v7.widget.Toolbar toolbar;
-    int current = 4;
-    int size = 30;
-
-    TextView txtQuestion;
-    ImageView imgQuestion;
-    ListView lvAnswer;
-    Button btnPrevious, btnNext;
+    private ViewPager pager;
+    private ArrayList<Integer> arrCCS;
+    private int current;
+    private int size;
+    MenuItem menuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,43 +40,55 @@ public class CCSActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ccs);
 
         AnhXa();
-        GetData();
+        GetDataLocal();
+        SetUpPage();
         SetToolbar();
     }
 
-    private void GetData() {
-        txtQuestion.setText("I am trying to add search bar on Actionbar and found Nullpointer exception on getActionVeiw().");
-        imgQuestion.setImageResource(R.drawable.question);
-
-        ArrayList<String> array = new ArrayList<>();
-        array.add("Câu trả lời 1");
-        array.add("Câu trả lời 2");
-        array.add("Câu trả lời 3");
-        array.add("Câu trả lời 4");
-
-        final AnswerAdapter adapter = new AnswerAdapter(this, R.layout.dong_answer, array);
-        lvAnswer.setAdapter(adapter);
-
-        lvAnswer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    private void SetUpPage() {
+        FragmentManager manager = getSupportFragmentManager();
+        PageAdapter adapter = new PageAdapter(manager);
+        for (int i = 0; i < arrCCS.size() ; i++){
+            adapter.add(Fragment_thi.newInstance(arrCCS.get(i)));
+        }
+        pager.setAdapter(adapter);
+        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Demo xét điều kiện check
-                if (position % 2 == 0)adapter.checkTrue(view);
-                else adapter.checkFalse(view);
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                current = i + 1;
+                changeItem(current, size);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
             }
         });
     }
 
+    private void GetDataLocal() {
+        arrCCS = new ArrayList<>();
+        arrCCS.add(1);
+        arrCCS.add(3);
+        arrCCS.add(2);
+        arrCCS.add(6);
+        arrCCS.add(40);
+        arrCCS.add(47);
+        arrCCS.add(11);
+        arrCCS.add(9);
+
+        current = 1;
+        size = arrCCS.size();
+    }
+
     private void AnhXa() {
         toolbar = findViewById(R.id.toolbar);
-
-        txtQuestion = (TextView) findViewById(R.id.textViewQuestion);
-        imgQuestion = (ImageView) findViewById(R.id.imageViewQuestion);
-
-        lvAnswer = (ListView) findViewById(R.id.listViewAnswer);
-
-        btnPrevious = (Button) findViewById(R.id.buttonPrevious);
-        btnNext = (Button) findViewById(R.id.buttonNext);
+        pager = (ViewPager) findViewById(R.id.view_pager);
     }
 
     // Liên kết menu tạo bên res
@@ -84,29 +96,13 @@ public class CCSActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(final Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu_question, menu);
-        changeItem(current, size, menu);
-
-        btnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                current++;
-                changeItem(current, size, menu);
-            }
-        });
-        btnPrevious.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                current--;
-                changeItem(current, size, menu);
-            }
-        });
-
+        menuItem = menu.findItem(R.id.menuQuestion);
+        changeItem(current, size);
         return true;
     }
 
     // Thay đổi title item menu question
-    private void changeItem(int cur, int size, Menu menu){
-        MenuItem menuItem = menu.findItem(R.id.menuQuestion);
+    private void changeItem(int cur, int size){
         menuItem.setTitle("Câu " + cur + " / " + size);
     }
 

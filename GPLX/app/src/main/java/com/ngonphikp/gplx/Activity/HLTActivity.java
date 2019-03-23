@@ -1,5 +1,7 @@
 package com.ngonphikp.gplx.Activity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -7,27 +9,39 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.ngonphikp.gplx.Adapter.HLTAdapter;
-import com.ngonphikp.gplx.Model.HocLyThuyet;
+import com.ngonphikp.gplx.Model.HLT;
 import com.ngonphikp.gplx.R;
+import com.ngonphikp.gplx.Service.APIService;
+import com.ngonphikp.gplx.Service.Dataservice;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HLTActivity extends AppCompatActivity {
 
     ListView lvHocLyThuyet;
-    ArrayList<HocLyThuyet> arrayHocLyThuyet;
+    ArrayList<HLT> arrayHLT;
     HLTAdapter adapter;
-
     android.support.v7.widget.Toolbar toolbar;
+    ProgressBar progressBar;
+
+    SharedPreferences sharedPreferences;
+    String level;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +49,15 @@ public class HLTActivity extends AppCompatActivity {
         setContentView(R.layout.activity_hlt);
 
         AnhXa();
+        GetDataLocal();
         GetData();
         ClickItem();
         SetToolbar();
+    }
+
+    private void GetDataLocal() {
+        sharedPreferences = getSharedPreferences("LocalData", Context.MODE_PRIVATE);
+        level = sharedPreferences.getString("Level", "A1");
     }
 
     //Bắt sự kiện click vào dòng học lý thuyết
@@ -72,7 +92,7 @@ public class HLTActivity extends AppCompatActivity {
     // Set toolbar thay cho actionbar
     private void SetToolbar() {
         //Set lại title
-        toolbar.setTitle("Học lý thuyết");
+        toolbar.setTitle("Học lý thuyết " + level);
         setSupportActionBar(toolbar);
 
         //Thêm nút navigation và thay đổi icon
@@ -102,17 +122,32 @@ public class HLTActivity extends AppCompatActivity {
     private void AnhXa() {
         lvHocLyThuyet = (ListView) findViewById(R.id.listViewHocLyThuyet);
         toolbar = findViewById(R.id.toolbar);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
     }
 
     private void GetData() {
-        arrayHocLyThuyet = new ArrayList<>();
+        Dataservice dataservice = APIService.getService();
+        Call<List<HLT>> callback = dataservice.GetHLTByGPLX(level);
+        arrayHLT = new ArrayList<>();
+        callback.enqueue(new ListCallback());
+    }
 
-        arrayHocLyThuyet.add(new HocLyThuyet(R.drawable.kythuatlaixe, "Tiêu đề 1", 5, 30));
-        arrayHocLyThuyet.add(new HocLyThuyet(R.drawable.kythuatlaixe, "Tiêu đề 2", 15, 44));
-        arrayHocLyThuyet.add(new HocLyThuyet(R.drawable.kythuatlaixe, "Tiêu đề 3", 20, 96));
-        arrayHocLyThuyet.add(new HocLyThuyet(R.drawable.kythuatlaixe, "Tiêu đề 4", 8, 78));
+    private class ListCallback implements Callback<List<HLT>> {
+        @Override
+        public void onResponse(Call<List<HLT>> call, Response<List<HLT>> response) {
+            arrayHLT = (ArrayList<HLT>) response.body();
+            for (int i = 0; i < arrayHLT.size(); i++){
+                arrayHLT.get(i).setCurrent(5);
+            }
+            adapter = new HLTAdapter(HLTActivity.this, R.layout.dong_hoc_ly_thuyet, arrayHLT);
+            lvHocLyThuyet.setAdapter(adapter);
+            progressBar.setVisibility(View.GONE);
+        }
 
-        adapter = new HLTAdapter(this, R.layout.dong_hoc_ly_thuyet, arrayHocLyThuyet);
-        lvHocLyThuyet.setAdapter(adapter);
+        @Override
+        public void onFailure(Call<List<HLT>> call, Throwable t) {
+            Log.d("Tag", t.getMessage());
+            t.printStackTrace();
+        }
     }
 }

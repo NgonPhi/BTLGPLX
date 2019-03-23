@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ngonphikp.gplx.Model.CauTraLoi;
 import com.ngonphikp.gplx.R;
 
 import java.util.ArrayList;
@@ -16,9 +17,9 @@ public class AnswerAdapter extends BaseAdapter {
 
     private Context context;
     private int layout;
-    private ArrayList<String> AnswerList;
+    private ArrayList<CauTraLoi> AnswerList;
 
-    public AnswerAdapter(Context context, int layout, ArrayList<String> answerList) {
+    public AnswerAdapter(Context context, int layout, ArrayList<CauTraLoi> answerList) {
         this.context = context;
         this.layout = layout;
         this.AnswerList = answerList;
@@ -50,21 +51,38 @@ public class AnswerAdapter extends BaseAdapter {
 
         //gán giá trị
         txtCount.setText((position + 1) + "");
-        txtContent.setText(AnswerList.get(position));
+        txtContent.setText(AnswerList.get(position).getNoiDung());
         return convertView;
     }
 
-    public void checkTrue(View convertView){
-        ImageView imageViewCheck = (ImageView) convertView.findViewById(R.id.imageViewCheck);
+    public void checkTrue(View view){
+        ImageView imageViewCheck = (ImageView) view.findViewById(R.id.imageViewCheck);
         imageViewCheck.setImageResource(R.drawable.checked);
-        ImageView imageViewBG = (ImageView) convertView.findViewById(R.id.imageViewBG);
-        imageViewBG.setImageResource(R.drawable.cicletrue);
     }
 
-    public void checkFalse(View convertView){
-        ImageView imageViewCheck = (ImageView) convertView.findViewById(R.id.imageViewCheck);
-        imageViewCheck.setImageResource(R.drawable.cancel);
-        ImageView imageViewBG = (ImageView) convertView.findViewById(R.id.imageViewBG);
+    public void checkFalse(View view){
+        ImageView imageViewBG = (ImageView) view.findViewById(R.id.imageViewBG);
         imageViewBG.setImageResource(R.drawable.ciclefalse);
+        ImageView imageViewCheck = (ImageView) view.findViewById(R.id.imageViewCheck);
+        imageViewCheck.setImageResource(R.drawable.cancel);
+    }
+
+    public void toggleCheck(View view, boolean check){
+        if(check)unCheck(view);
+        else check(view);
+    }
+
+    private void check(View view){
+        ImageView imageViewBG = (ImageView) view.findViewById(R.id.imageViewBG);
+        imageViewBG.setImageResource(R.drawable.cicletrue);
+        ImageView imageViewCheck = (ImageView) view.findViewById(R.id.imageViewCheck);
+        imageViewCheck.setVisibility(View.VISIBLE);
+    }
+
+    private void unCheck(View view){
+        ImageView imageViewBG = (ImageView) view.findViewById(R.id.imageViewBG);
+        imageViewBG.setImageResource(R.drawable.circle);
+        ImageView imageViewCheck = (ImageView) view.findViewById(R.id.imageViewCheck);
+        imageViewCheck.setVisibility(View.INVISIBLE);
     }
 }

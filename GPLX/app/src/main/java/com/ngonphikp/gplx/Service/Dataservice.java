@@ -1,6 +1,9 @@
 package com.ngonphikp.gplx.Service;
 
 import com.ngonphikp.gplx.Model.BBDB;
+import com.ngonphikp.gplx.Model.CauHoi;
+import com.ngonphikp.gplx.Model.CauTraLoi;
+import com.ngonphikp.gplx.Model.HLT;
 import com.ngonphikp.gplx.Model.Luat;
 
 import java.util.List;
@@ -31,4 +34,19 @@ public interface Dataservice {
     @FormUrlEncoded
     @POST("getLuatbyType.php")
     Call<List<Luat>> GetLuatbyType(@Field("loai") String loai);
+
+    // Lấy loại theo tên bằng
+    @FormUrlEncoded
+    @POST("getHLTByGPLX.php")
+    Call<List<HLT>> GetHLTByGPLX(@Field("tenBang") String tenBang);
+
+    // Lấy câu hỏi theo id
+    @FormUrlEncoded
+    @POST("getCauHoibyId.php")
+    Call<CauHoi> GetCauHoiById(@Field("id") int id);
+
+    // Lấy câu trả lời theo idCH
+    @FormUrlEncoded
+    @POST("getCTLbyIdCH.php")
+    Call<List<CauTraLoi>> GetCTLByIdCH(@Field("id") int id);
 }

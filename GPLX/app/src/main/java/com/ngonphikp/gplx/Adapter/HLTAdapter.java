@@ -8,27 +8,27 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ngonphikp.gplx.Model.HocLyThuyet;
+import com.ngonphikp.gplx.Model.HLT;
 import com.ngonphikp.gplx.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class HLTAdapter extends BaseAdapter {
 
     private Context context;
     private int layout;
-    private ArrayList<HocLyThuyet> HocLyThuyetList;
+    private ArrayList<HLT> HLTList;
 
-    public HLTAdapter(Context context, int layout, ArrayList<HocLyThuyet> hocLyThuyetList) {
+    public HLTAdapter(Context context, int layout, ArrayList<HLT> hLTList) {
         this.context = context;
         this.layout = layout;
-        this.HocLyThuyetList = hocLyThuyetList;
+        this.HLTList = hLTList;
     }
 
     @Override
     public int getCount() {
-        return HocLyThuyetList.size();
+        return HLTList.size();
     }
 
     @Override
@@ -52,16 +52,15 @@ public class HLTAdapter extends BaseAdapter {
         TextView textViewContent = (TextView) convertView.findViewById(R.id.textViewContent);
 
         //gán giá trị
-        HocLyThuyet hocLyThuyet = HocLyThuyetList.get(position);
-        imgBackGround.setBackgroundResource(hocLyThuyet.getHinhAnh());
-        textViewContent.setText(hocLyThuyet.getTieuDe());
+        Picasso.with(context).load(HLTList.get(position).getHinhAnh()).into(imgBackGround);
+        textViewContent.setText(HLTList.get(position).getLoai());
 
-        int current = hocLyThuyet.getCurrent();
-        int size = hocLyThuyet.getSize();
+        int current = HLTList.get(position).getCurrent();
+        int size = Integer.parseInt(HLTList.get(position).getSize());
 
-        int number = (int)current * 100/ size;
+        int number = (size == 0)? 0 : (int)current * 100/ size;
         textViewNumber.setText(number + "%");
-
         return convertView;
     }
+
 }
