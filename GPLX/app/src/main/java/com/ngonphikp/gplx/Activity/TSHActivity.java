@@ -1,5 +1,7 @@
 package com.ngonphikp.gplx.Activity;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
+import android.support.v7.app.AlertDialog;
 
 import com.ngonphikp.gplx.Adapter.TSHAdapter;
 import com.ngonphikp.gplx.Model.ThiSatHach;
@@ -49,9 +52,32 @@ public class TSHActivity extends AppCompatActivity {
         itemThiNgauNhien.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(TSHActivity.this, "Thi Ngẫu Nhiên", Toast.LENGTH_SHORT).show();
+                Thi();
             }
         });
+    }
+
+    private void Thi(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Ôn thi giấy phép lái xe");
+        builder.setMessage("Bạn đã sẵn sàng thi?");
+        builder.setCancelable(true);
+        builder.setPositiveButton("Sẵn sàng", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent intent = new Intent(TSHActivity.this, CTThiAcivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_out, R.anim.slide_in);
+            }
+        });
+        builder.setNegativeButton("Thoát", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     private void GetData() {

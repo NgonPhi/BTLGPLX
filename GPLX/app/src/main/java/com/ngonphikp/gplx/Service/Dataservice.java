@@ -1,6 +1,7 @@
 package com.ngonphikp.gplx.Service;
 
 import com.ngonphikp.gplx.Model.BBDB;
+import com.ngonphikp.gplx.Model.Bang;
 import com.ngonphikp.gplx.Model.CauHoi;
 import com.ngonphikp.gplx.Model.CauTraLoi;
 import com.ngonphikp.gplx.Model.HLT;
@@ -16,7 +17,7 @@ import retrofit2.http.POST;
 
 public interface Dataservice {
 
-    //Lấy các loại biển báo đường bộ getTypeBBDB.php
+    //Lấy các loại biển báo đường bộ
     @GET("getTypeBBDB.php")
     Call<List<String>> GetTypeBBDB();
 
@@ -49,4 +50,13 @@ public interface Dataservice {
     @FormUrlEncoded
     @POST("getCTLbyIdCH.php")
     Call<List<CauTraLoi>> GetCTLByIdCH(@Field("id") int id);
+
+    // Lấy idCH ôn thi
+    @FormUrlEncoded
+    @POST("getIdCHOnThi.php")
+    Call<List<Integer>> GetIdCHOnThi(@Field("tenBang") String tenBang, @Field("loai") String loai);
+
+    //Lấy các bằng
+    @GET("getALLBang.php")
+    Call<List<Bang>> GetALLBang();
 }

@@ -1,5 +1,9 @@
 package com.ngonphikp.gplx.Activity;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -9,19 +13,31 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.GridView;
+import android.widget.TextView;
 
 import com.ngonphikp.gplx.Adapter.PageAdapter;
-import com.ngonphikp.gplx.Fragment.Fragment_ccs;
+import com.ngonphikp.gplx.Adapter.QuestionAdapter;
+import com.ngonphikp.gplx.Fragment.Fragment_hoc;
 import com.ngonphikp.gplx.R;
+import com.ngonphikp.gplx.Service.APIService;
+import com.ngonphikp.gplx.Service.Dataservice;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class CCSActivity extends AppCompatActivity {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class CTHocActivity extends AppCompatActivity {
 
     android.support.v7.widget.Toolbar toolbar;
     private ViewPager pager;
@@ -30,14 +46,17 @@ public class CCSActivity extends AppCompatActivity {
     private int size;
     MenuItem menuItem;
 
+    SharedPreferences sharedPreferences;
+    String level;
+    String loai;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ccs);
-
+        setContentView(R.layout.activity_cthoc);
         AnhXa();
         GetDataLocal();
-        SetUpPage();
+        GetData();
         SetToolbar();
     }
 
@@ -45,7 +64,7 @@ public class CCSActivity extends AppCompatActivity {
         FragmentManager manager = getSupportFragmentManager();
         PageAdapter adapter = new PageAdapter(manager);
         for (int i = 0; i < arrCCS.size() ; i++){
-            adapter.add(Fragment_ccs.newInstance(arrCCS.get(i)));
+            adapter.add(Fragment_hoc.newInstance(arrCCS.get(i)));
         }
         pager.setAdapter(adapter);
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -68,18 +87,33 @@ public class CCSActivity extends AppCompatActivity {
     }
 
     private void GetDataLocal() {
-        arrCCS = new ArrayList<>();
-        arrCCS.add(1);
-        arrCCS.add(3);
-        arrCCS.add(2);
-        arrCCS.add(6);
-        arrCCS.add(40);
-        arrCCS.add(47);
-        arrCCS.add(11);
-        arrCCS.add(9);
+        sharedPreferences = getSharedPreferences("LocalData", Context.MODE_PRIVATE);
+        level = sharedPreferences.getString("Level", "A1");
 
-        current = 1;
-        size = arrCCS.size();
+        Intent intent = getIntent();
+        loai = intent.getStringExtra("Loai");
+    }
+
+    private void GetData() {
+        Dataservice dataservice = APIService.getService();
+        Call<List<Integer>> callback = dataservice.GetIdCHOnThi(level, loai);
+        arrCCS = new ArrayList<>();
+        callback.enqueue(new Callback<List<Integer>>() {
+            @Override
+            public void onResponse(Call<List<Integer>> call, Response<List<Integer>> response) {
+                arrCCS = (ArrayList<Integer>) response.body();
+                current = 1;
+                size = arrCCS.size();
+                SetUpPage();
+                changeItem(current, size);
+            }
+
+            @Override
+            public void onFailure(Call<List<Integer>> call, Throwable t) {
+                Log.d("Tag", t.getMessage());
+                t.printStackTrace();
+            }
+        });
     }
 
     private void AnhXa() {
@@ -107,18 +141,37 @@ public class CCSActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.menuQuestion:
-                Toast.makeText(this, item.getTitle(), Toast.LENGTH_SHORT).show();
+                ShowDialogQuestion();
                 break;
         }
         return true;
     }
 
+    private void ShowDialogQuestion() {
+        ArrayList<Integer> arrInt = new ArrayList<>();
+        for(int i = 1; i <= size ; i++)arrInt.add(i);
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_question);
+        TextView txtTitle = (TextView) dialog.findViewById(R.id.textViewTitle);
+        txtTitle.setText("Danh sách câu hỏi: ");
+        GridView gvDSCH = (GridView) dialog.findViewById(R.id.GridViewDSCH);
+        QuestionAdapter qAdpater = new QuestionAdapter(this, R.layout.item_question, arrInt);
+        gvDSCH.setAdapter(qAdpater);
+        gvDSCH.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                pager.setCurrentItem(position);
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
     // Set toolbar thay cho actionbar
     private void SetToolbar() {
-        //Set lại title
-        toolbar.setTitle("Các câu hay sai");
+        toolbar.setTitle(loai);
         setSupportActionBar(toolbar);
-
         //Thêm nút navigation và thay đổi icon
         //Lấy chiều cao của ActionBar
         TypedArray styledAttributes =
@@ -142,5 +195,4 @@ public class CCSActivity extends AppCompatActivity {
             }
         });
     }
-
 }

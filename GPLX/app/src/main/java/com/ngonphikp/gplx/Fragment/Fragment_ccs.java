@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ngonphikp.gplx.Adapter.AnswerAdapter;
 import com.ngonphikp.gplx.Model.CauHoi;
@@ -30,7 +29,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Fragment_thi extends Fragment {
+public class Fragment_ccs extends Fragment {
 
     View view;
     TextView txtQuestion;
@@ -45,15 +44,15 @@ public class Fragment_thi extends Fragment {
     private static final String KEY = "key";
     private int id;
 
-    public Fragment_thi() {
+    public Fragment_ccs() {
     }
 
-    public static Fragment_thi newInstance(int id){
-        Fragment_thi fragment_thi = new Fragment_thi();
+    public static Fragment_ccs newInstance(int id){
+        Fragment_ccs Fragment_ccs = new Fragment_ccs();
         Bundle bundle = new Bundle();
         bundle.putInt(KEY, id);
-        fragment_thi.setArguments(bundle);
-        return fragment_thi;
+        Fragment_ccs.setArguments(bundle);
+        return Fragment_ccs;
     }
 
     @Override
@@ -112,6 +111,10 @@ public class Fragment_thi extends Fragment {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         adapter.toggleCheck(view, check.get(position));
+                        if (!check.get(position)){
+                            if(arrCTL.get(position).getKiemTra().equals("true"))adapter.checkTrue(view);
+                            else adapter.checkFalse(view);
+                        }
                         check.set(position, !check.get(position));
                     }
                 });

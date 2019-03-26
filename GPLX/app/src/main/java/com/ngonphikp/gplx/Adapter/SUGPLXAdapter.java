@@ -66,7 +66,7 @@ public class SUGPLXAdapter extends BaseAdapter {
         TextView txtContent = (TextView) convertView.findViewById(R.id.textViewContent);
         RadioButton radioBtn = (RadioButton) convertView.findViewById(R.id.radioButton);
         //gán giá trị
-        txtType.setText("Bằng " + SUGPLXList.get(position).getTen());
+        txtType.setText(SUGPLXList.get(position).getTen());
         txtContent.setText(SUGPLXList.get(position).getNoiDung());
 
         //check the radio button if both position and selectedPosition matches

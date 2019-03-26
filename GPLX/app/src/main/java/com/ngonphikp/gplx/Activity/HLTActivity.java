@@ -1,6 +1,7 @@
 package com.ngonphikp.gplx.Activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -65,7 +66,10 @@ public class HLTActivity extends AppCompatActivity {
         lvHocLyThuyet.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(HLTActivity.this, position + "", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(HLTActivity.this, CTHocActivity.class);
+                intent.putExtra("Loai", arrayHLT.get(position).getLoai());
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_out, R.anim.slide_in);
             }
         });
     }
