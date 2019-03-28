@@ -1,7 +1,10 @@
 package com.ngonphikp.gplx.Activity;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -12,6 +15,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,9 +31,16 @@ import com.ngonphikp.gplx.Adapter.PageAdapter;
 import com.ngonphikp.gplx.Adapter.QuestionAdapter;
 import com.ngonphikp.gplx.Fragment.Fragment_thi;
 import com.ngonphikp.gplx.R;
+import com.ngonphikp.gplx.Service.APIService;
+import com.ngonphikp.gplx.Service.Dataservice;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CTThiAcivity extends AppCompatActivity {
 
@@ -41,19 +52,53 @@ public class CTThiAcivity extends AppCompatActivity {
     MenuItem menuItem;
     Hourglass hourglass;
 
+    SharedPreferences sharedPreferences;
+    String level;
+
+    int stt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ctthi);
         AnhXa();
         GetDataLocal();
-        SetUpPage();
+        GetData();
         SetToolbar();
         SetUpTimer();
     }
 
+    private void GetData() {
+        arrCCS = new ArrayList<>();
+        // Thi ngẫu nhiên
+        if (stt == -1){
+            current = 1;
+            size = arrCCS.size();
+        }
+        //Thi theo bộ
+        else{
+            Dataservice dataservice = APIService.getService();
+            Call<List<Integer>> callback = dataservice.GetIdCHThi(level, stt);
+            callback.enqueue(new Callback<List<Integer>>() {
+                @Override
+                public void onResponse(Call<List<Integer>> call, Response<List<Integer>> response) {
+                    arrCCS = (ArrayList<Integer>) response.body();
+                    current = 1;
+                    size = arrCCS.size();
+                    SetUpPage();
+                    changeItem(current, size);
+                }
+                @Override
+                public void onFailure(Call<List<Integer>> call, Throwable t) {
+                    Log.d("Tag", t.getMessage());
+                    t.printStackTrace();
+                }
+            });
+        }
+    }
+
     private void SetUpTimer() {
-        hourglass = new Hourglass(50000, 1000) {
+        hourglass = new Hourglass(15 * 60000, 1000) {
             @Override
             public void onTimerTick(long millisUntilFinished) {
                 String countTime = String.format("%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished), TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(
@@ -96,18 +141,10 @@ public class CTThiAcivity extends AppCompatActivity {
     }
 
     private void GetDataLocal() {
-        arrCCS = new ArrayList<>();
-        arrCCS.add(1);
-        arrCCS.add(3);
-        arrCCS.add(2);
-        arrCCS.add(6);
-        arrCCS.add(40);
-        arrCCS.add(47);
-        arrCCS.add(11);
-        arrCCS.add(9);
-
-        current = 1;
-        size = arrCCS.size();
+        sharedPreferences = getSharedPreferences("LocalData", Context.MODE_PRIVATE);
+        level = sharedPreferences.getString("Level", "A1");
+        Intent intent = getIntent();
+        stt = intent.getIntExtra("stt", -1);
     }
 
     private void AnhXa() {

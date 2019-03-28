@@ -56,6 +56,16 @@ public interface Dataservice {
     @POST("getIdCHOnThi.php")
     Call<List<Integer>> GetIdCHOnThi(@Field("tenBang") String tenBang, @Field("loai") String loai);
 
+    // Lấy idCH thi
+    @FormUrlEncoded
+    @POST("getIdCHThi.php")
+    Call<List<Integer>> GetIdCHThi(@Field("tenBang") String tenBang, @Field("stt") int stt);
+
+    // Lấy số bộ đề
+    @FormUrlEncoded
+    @POST("getLengthThi.php")
+    Call<Integer> GetLengthThi(@Field("tenBang") String tenBang);
+
     //Lấy các bằng
     @GET("getALLBang.php")
     Call<List<Bang>> GetALLBang();

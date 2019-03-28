@@ -115,6 +115,7 @@ public class Fragment_thi extends Fragment {
                         check.set(position, !check.get(position));
                     }
                 });
+
                 progressBar.setVisibility(View.GONE);
             }
 
