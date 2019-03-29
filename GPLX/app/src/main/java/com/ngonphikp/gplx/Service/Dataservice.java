@@ -21,7 +21,7 @@ public interface Dataservice {
     @GET("getTypeBBDB.php")
     Call<List<String>> GetTypeBBDB();
 
-    //Lấy biển báo đường bộ theo loại
+    //Lấy biển báo đường bộ theo loại --> POST -- >loai  --> lấy về Call<List<BBDB>>
     @FormUrlEncoded
     @POST("getBBDBbyType.php")
     Call<List<BBDB>> GetBBDBbyType(@Field("loai") String loai);

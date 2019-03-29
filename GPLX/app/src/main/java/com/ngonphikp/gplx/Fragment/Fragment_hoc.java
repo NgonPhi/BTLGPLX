@@ -13,7 +13,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.ngonphikp.gplx.Activity.CTHocActivity;
 import com.ngonphikp.gplx.Adapter.AnswerAdapter;
 import com.ngonphikp.gplx.Model.CauHoi;
 import com.ngonphikp.gplx.Model.CauTraLoi;
@@ -69,6 +71,10 @@ public class Fragment_hoc extends Fragment {
 
         AnhXa();
         GetData();
+
+//        ((CTHocActivity) getActivity()).number[0][0] = 1;
+//        Toast.makeText(getActivity(), ((CTHocActivity) getActivity()).number[0][0] + "", Toast.LENGTH_SHORT).show();
+
         return view;
     }
 

@@ -12,8 +12,8 @@
         }
     }
 
-    //Tạo mảng
-    $mang = array();  
+    //Tạo mảng --> object kiểu BBDB
+    $mang = array();   
 
     // $_POST['loai'] = "Biển báo cấm";
 

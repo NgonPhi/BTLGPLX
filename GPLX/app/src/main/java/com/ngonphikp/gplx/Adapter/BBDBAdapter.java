@@ -21,7 +21,11 @@ public class BBDBAdapter extends BaseAdapter {
 
     private Context context;
     private int layout;
+
+    //List data nhận về
     private List<BBDB> BBDBList;
+
+    // List mới khi lọc
     private ArrayList<BBDB> arrayList;
 
     public BBDBAdapter(Context context, int layout, List<BBDB> BBDBList) {
@@ -65,13 +69,18 @@ public class BBDBAdapter extends BaseAdapter {
     }
 
     public void filter(String charText){
+        // chuyển về dạng viết thường để so sánh
         charText = charText.toLowerCase(Locale.getDefault());
+        // Xóa list hiện thời
         BBDBList.clear();
+        // Nếu length = 0
         if (charText.length() == 0){
+            // Thêm tất cả list data vào list hiện thời
             BBDBList.addAll(arrayList);
         }
         else{
             for (BBDB bbdb : arrayList) {
+                // Những BBDB thỏa mãn điều kiện lọc sẽ được thêm lần lượt vào list hiện thời
                 if (bbdb.getTieuDe().toLowerCase(Locale.getDefault()).contains(charText)) {
                     BBDBList.add(bbdb);
                 }
@@ -80,6 +89,7 @@ public class BBDBAdapter extends BaseAdapter {
                 }
             }
         }
+        // Thông báo cho adapter đã thay đổi
         notifyDataSetChanged();
     }
 }

@@ -74,16 +74,27 @@ public class BBDBActivity extends AppCompatActivity {
 
     private void SetupViewPager() {
         pageAdapter = new PageAdapter(getSupportFragmentManager());
+        // kết nối dataservice --> gọi hàm lấy dữ liệu cho tab --> mảng các loại BBDB (string)
         Dataservice dataservice = APIService.getService();
         Call<List<String>> callback = dataservice.GetTypeBBDB();
         callback.enqueue(new Callback<List<String>>() {
             @Override
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+                // Dữ liệu trả về response.body() --> Gán vào list DSTitle
                 ArrayList<String> DSTitle = (ArrayList<String>) response.body();
+
+                // Tạo các fragment tương ứng
                 for (int i = 0; i < DSTitle.size(); i++)
+                    // Thêm fragment vào adapter với title tương ứng
                     pageAdapter.add(Fragment_bbdb.newInstance(DSTitle.get(i)), DSTitle.get(i));
+
+                // Cho viewPager quản lý các fragment thông qua pageAdapter
                 viewPager.setAdapter(pageAdapter);
+
+                // Liên kết tablayout với view pager
                 tab.setupWithViewPager(viewPager);
+
+                // Ẩn dialog
                 progressDialog.dismiss();
             }
             @Override
@@ -127,6 +138,7 @@ public class BBDBActivity extends AppCompatActivity {
     // Liên kết menu tạo bên res
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        // Ánh xạ tới menu trong R.menu
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu_search, menu);
 
@@ -140,14 +152,17 @@ public class BBDBActivity extends AppCompatActivity {
 
         //Bắt sự kiện search view
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            // Khi ấn nút tìm kiếm
             @Override
             public boolean onQueryTextSubmit(String s) {
                 Fragment_bbdb fragment_bbdb = (Fragment_bbdb) viewPager.getAdapter().instantiateItem(viewPager, pos);
                 fragment_bbdb.filter(s.trim());
                 return false;
             }
+            // Khi dòng text thay đổi
             @Override
             public boolean onQueryTextChange(String s) {
+                // Thay đổi dữ liệu trên viewPager dựa vào adpater gián tiếp thông qua fragment tại vị trí tương ứng
                 Fragment_bbdb fragment_bbdb = (Fragment_bbdb) viewPager.getAdapter().instantiateItem(viewPager, pos);
                 fragment_bbdb.filter(s.trim());
                 return false;

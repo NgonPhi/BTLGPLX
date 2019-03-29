@@ -22,6 +22,7 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ngonphikp.gplx.Adapter.PageAdapter;
 import com.ngonphikp.gplx.Adapter.QuestionAdapter;
@@ -41,7 +42,7 @@ public class CTHocActivity extends AppCompatActivity {
 
     android.support.v7.widget.Toolbar toolbar;
     private ViewPager pager;
-    private ArrayList<Integer> arrCCS;
+    private ArrayList<Integer> arrIdCH;
     private int current;
     private int size;
     MenuItem menuItem;
@@ -49,6 +50,7 @@ public class CTHocActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     String level;
     String loai;
+    public int number[][];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,13 +60,16 @@ public class CTHocActivity extends AppCompatActivity {
         GetDataLocal();
         GetData();
         SetToolbar();
+        number = new int[75][4];
+        for(int i = 0 ; i < 75; i++)
+            for(int j = 0; j < 4 ; j++)number[i][j] = 0;
     }
 
     private void SetUpPage() {
         FragmentManager manager = getSupportFragmentManager();
         PageAdapter adapter = new PageAdapter(manager);
-        for (int i = 0; i < arrCCS.size() ; i++){
-            adapter.add(Fragment_hoc.newInstance(arrCCS.get(i)));
+        for (int i = 0; i < arrIdCH.size() ; i++){
+            adapter.add(Fragment_hoc.newInstance(arrIdCH.get(i)));
         }
         pager.setAdapter(adapter);
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -97,13 +102,13 @@ public class CTHocActivity extends AppCompatActivity {
     private void GetData() {
         Dataservice dataservice = APIService.getService();
         Call<List<Integer>> callback = dataservice.GetIdCHOnThi(level, loai);
-        arrCCS = new ArrayList<>();
+        arrIdCH = new ArrayList<>();
         callback.enqueue(new Callback<List<Integer>>() {
             @Override
             public void onResponse(Call<List<Integer>> call, Response<List<Integer>> response) {
-                arrCCS = (ArrayList<Integer>) response.body();
+                arrIdCH = (ArrayList<Integer>) response.body();
                 current = 1;
-                size = arrCCS.size();
+                size = arrIdCH.size();
                 SetUpPage();
                 changeItem(current, size);
             }

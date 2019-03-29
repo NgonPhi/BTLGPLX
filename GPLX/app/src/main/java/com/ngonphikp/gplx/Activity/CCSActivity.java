@@ -25,7 +25,7 @@ public class CCSActivity extends AppCompatActivity {
 
     android.support.v7.widget.Toolbar toolbar;
     private ViewPager pager;
-    private ArrayList<Integer> arrCCS;
+    private ArrayList<Integer> arrIdCH;
     private int current;
     private int size;
     MenuItem menuItem;
@@ -44,8 +44,8 @@ public class CCSActivity extends AppCompatActivity {
     private void SetUpPage() {
         FragmentManager manager = getSupportFragmentManager();
         PageAdapter adapter = new PageAdapter(manager);
-        for (int i = 0; i < arrCCS.size() ; i++){
-            adapter.add(Fragment_ccs.newInstance(arrCCS.get(i)));
+        for (int i = 0; i < arrIdCH.size() ; i++){
+            adapter.add(Fragment_ccs.newInstance(arrIdCH.get(i)));
         }
         pager.setAdapter(adapter);
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -68,18 +68,18 @@ public class CCSActivity extends AppCompatActivity {
     }
 
     private void GetDataLocal() {
-        arrCCS = new ArrayList<>();
-        arrCCS.add(1);
-        arrCCS.add(3);
-        arrCCS.add(2);
-        arrCCS.add(6);
-        arrCCS.add(40);
-        arrCCS.add(47);
-        arrCCS.add(11);
-        arrCCS.add(9);
+        arrIdCH = new ArrayList<>();
+        arrIdCH.add(1);
+        arrIdCH.add(3);
+        arrIdCH.add(2);
+        arrIdCH.add(6);
+        arrIdCH.add(40);
+        arrIdCH.add(47);
+        arrIdCH.add(11);
+        arrIdCH.add(9);
 
         current = 1;
-        size = arrCCS.size();
+        size = arrIdCH.size();
     }
 
     private void AnhXa() {

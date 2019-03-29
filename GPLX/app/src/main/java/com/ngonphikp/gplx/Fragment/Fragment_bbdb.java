@@ -62,15 +62,19 @@ public class Fragment_bbdb extends Fragment {
     }
 
     private void GetData(){
+        // kết nối dataservice --> gọi hàm lấy dữ liệu cho fragment --> mảng các BBDB
         Dataservice dataservice = APIService.getService();
         Call<List<BBDB>> callback = dataservice.GetBBDBbyType(type);
         data = new ArrayList<>();
         callback.enqueue(new Callback<List<BBDB>>() {
             @Override
             public void onResponse(Call<List<BBDB>> call, Response<List<BBDB>> response) {
+                // Dữ liệu trả về response.body() --> Gán vào list data
                 data = (ArrayList<BBDB>) response.body();
+                // hiển thị vào list thông qua adapter
                 adapter = new BBDBAdapter(getActivity(), R.layout.dong_bien_bao, data);
                 lvBienBaoDuongBo.setAdapter(adapter);
+                // Ẩn progress bar
                 progressBar.setVisibility(View.GONE);
             }
 

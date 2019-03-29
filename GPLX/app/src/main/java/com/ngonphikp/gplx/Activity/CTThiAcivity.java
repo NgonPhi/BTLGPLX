@@ -46,7 +46,7 @@ public class CTThiAcivity extends AppCompatActivity {
 
     android.support.v7.widget.Toolbar toolbar;
     private ViewPager pager;
-    private ArrayList<Integer> arrCCS;
+    private ArrayList<Integer> arrIdCH;
     private int current;
     private int size;
     MenuItem menuItem;
@@ -69,11 +69,11 @@ public class CTThiAcivity extends AppCompatActivity {
     }
 
     private void GetData() {
-        arrCCS = new ArrayList<>();
+        arrIdCH = new ArrayList<>();
         // Thi ngẫu nhiên
         if (stt == -1){
             current = 1;
-            size = arrCCS.size();
+            size = arrIdCH.size();
         }
         //Thi theo bộ
         else{
@@ -82,9 +82,9 @@ public class CTThiAcivity extends AppCompatActivity {
             callback.enqueue(new Callback<List<Integer>>() {
                 @Override
                 public void onResponse(Call<List<Integer>> call, Response<List<Integer>> response) {
-                    arrCCS = (ArrayList<Integer>) response.body();
+                    arrIdCH = (ArrayList<Integer>) response.body();
                     current = 1;
-                    size = arrCCS.size();
+                    size = arrIdCH.size();
                     SetUpPage();
                     changeItem(current, size);
                 }
@@ -117,8 +117,8 @@ public class CTThiAcivity extends AppCompatActivity {
     private void SetUpPage() {
         FragmentManager manager = getSupportFragmentManager();
         PageAdapter adapter = new PageAdapter(manager);
-        for (int i = 0; i < arrCCS.size() ; i++){
-            adapter.add(Fragment_thi.newInstance(arrCCS.get(i)));
+        for (int i = 0; i < arrIdCH.size() ; i++){
+            adapter.add(Fragment_thi.newInstance(arrIdCH.get(i)));
         }
         pager.setAdapter(adapter);
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
