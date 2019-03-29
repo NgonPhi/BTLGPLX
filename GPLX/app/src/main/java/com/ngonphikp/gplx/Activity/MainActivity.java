@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -73,7 +74,8 @@ public class MainActivity extends AppCompatActivity {
         txtURL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Google", Toast.LENGTH_SHORT).show();
+                Uri uri = Uri.parse("https://daotaolaixehd.com.vn/thi-trac-nghiem-lai-xe");
+                IntentActionView(uri);
             }
         });
         //listview top
@@ -88,22 +90,36 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
-                case 0:
-                    Intent intent = new Intent(MainActivity.this, SetUpGPLXActivity.class);
-                    startActivity(intent);
-                    break;
-                case 1:
-                    Toast.makeText(MainActivity.this, "Đánh Giá Ứng Dụng", Toast.LENGTH_SHORT).show();
-                    break;
-                case 2:
-                    Toast.makeText(MainActivity.this, "Ứng Dụng Khác", Toast.LENGTH_SHORT).show();
-                    break;
-                case 3:
-                    Toast.makeText(MainActivity.this, "Chính Sách Và Điều Khoản", Toast.LENGTH_SHORT).show();
-                    break;
+                    case 0:
+                        Intent intent = new Intent(MainActivity.this, SetUpGPLXActivity.class);
+                        startActivity(intent);
+                        break;
+                    case 1:
+                        //Uri uri = Uri.parse("market://details?id="+ getApplicationContext().getPackageName());
+                        Uri uri = Uri.parse("market://details?id=" + "com.waterfall.trafficlaws2&hl=vi");
+                        IntentActionView(uri);
+                        break;
+                    case 2:
+                        //Uri uri = Uri.parse("market://details?id="+ getApplicationContext().getPackageName());
+                        Uri uri2 = Uri.parse("market://details?id=" + "com.waterfall.trafficlaws2&hl=vi");
+                        IntentActionView(uri2);
+                        break;
+                    case 3:
+                        Uri uri3 = Uri.parse("https://m.facebook.com/permalink.php?story_fbid=1908372702791776&id=1763303467298701");
+                        IntentActionView(uri3);
+                        break;
                 }
             }
         });
+    }
+
+    private void IntentActionView(Uri uri) {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setData(uri);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 
     // Set toolbar thay cho actionbar
