@@ -85,7 +85,7 @@ public class MTActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(newdrawable);
 
-        //Bắt sự kiện click nút home
+        //Bắt sự kiện click
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

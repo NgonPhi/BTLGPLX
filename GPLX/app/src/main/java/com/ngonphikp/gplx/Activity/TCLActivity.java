@@ -105,14 +105,18 @@ public class TCLActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Tắt màn hình hiện thời --> mở lên màn hình trước nó
                 finish();
+                // Gọi hiệu ứng animation khi chuyển màn -- > sang bên trái
                 overridePendingTransition(R.anim.slide_out, R.anim.slide_in);
             }
         });
     }
 
     private void SetUPQC() {
+        // set thời gian chuyển sang image khác --> 3000ms
         viewFlipper.setFlipInterval(3000);
+        // tự động chuyển --> true
         viewFlipper.setAutoStart(true);
     }
 }

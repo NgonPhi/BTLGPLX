@@ -51,6 +51,7 @@ public class LuatActivity extends AppCompatActivity {
     // Liên kết menu tạo bên res
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        // Lấy menu --> menu_search
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu_search, menu);
 
@@ -64,11 +65,12 @@ public class LuatActivity extends AppCompatActivity {
 
         //Bắt sự kiện search view
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            // Sự kiện khi mà ấn nút tìm kiếm
             @Override
             public boolean onQueryTextSubmit(String s) {
                 return false;
             }
-
+            // Khi gõ chữ --> thay đổi text
             @Override
             public boolean onQueryTextChange(String s) {
                 adapter.filter(s.trim());
@@ -108,16 +110,21 @@ public class LuatActivity extends AppCompatActivity {
     }
 
     private void GetData() {
+        // lấy dữ liệu bên TCL chuyển sang
         loai = getIntent().getStringExtra("loai");
+        // kết nối dataservice --> gọi hàm lấy dữ liệu cho listview --> trả về mảng Luat theo loai
         Dataservice dataservice = APIService.getService();
         Call<List<Luat>> callback = dataservice.GetLuatbyType(loai);
         data = new ArrayList<>();
         callback.enqueue(new Callback<List<Luat>>() {
             @Override
             public void onResponse(Call<List<Luat>> call, Response<List<Luat>> response) {
+                // Dữ liệu trả về --> response.body() --> ép kiểu --> (ArrayList<Luat>) --> gán cho data
                 data = (ArrayList<Luat>) response.body();
+                // set adapter và listview tương ứng
                 adapter = new LuatAdapter(LuatActivity.this, R.layout.dong_tra_cuu_luat, data);
                 lvLuat.setAdapter(adapter);
+                // ẩn progress bar
                 progressBar.setVisibility(View.GONE);
             }
 

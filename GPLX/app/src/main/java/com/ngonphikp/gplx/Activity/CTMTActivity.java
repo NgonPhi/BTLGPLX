@@ -52,15 +52,17 @@ public class CTMTActivity extends AppCompatActivity {
         loai = intent.getStringExtra("loai");
         int hinhAnh = intent.getIntExtra("hinhAnh", 0);
         imgMeoThi.setImageResource(hinhAnh);
+
         Dataservice dataservice = APIService.getService();
         Call<List<String>> callback = dataservice.GetCTMTbyType(loai);
         callback.enqueue(new Callback<List<String>>() {
             @Override
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+                // Lưu trữ các string có stt
                 arrayCourse = new ArrayList<>();
                 ArrayList<String> data = (ArrayList<String>) response.body();
                 for (int i = 0; i < data.size(); i++){
-                    arrayCourse.add(i + ".   " + data.get(i));
+                    arrayCourse.add((i + 1) + ".   " + data.get(i));
                 }
                 ArrayAdapter adapter = new ArrayAdapter(CTMTActivity.this,android.R.layout.simple_list_item_1, arrayCourse);
                 listViewKNQT.setAdapter(adapter);

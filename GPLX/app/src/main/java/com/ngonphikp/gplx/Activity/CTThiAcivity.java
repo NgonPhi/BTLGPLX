@@ -72,8 +72,24 @@ public class CTThiAcivity extends AppCompatActivity {
         arrIdCH = new ArrayList<>();
         // Thi ngẫu nhiên
         if (stt == -1){
-            current = 1;
-            size = arrIdCH.size();
+            Dataservice dataservice = APIService.getService();
+            Call<List<Integer>> callback = dataservice.GetIdCHThiNN(level);
+            callback.enqueue(new Callback<List<Integer>>() {
+                @Override
+                public void onResponse(Call<List<Integer>> call, Response<List<Integer>> response) {
+                    arrIdCH = (ArrayList<Integer>) response.body();
+                    current = 1;
+                    size = arrIdCH.size();
+                    SetUpPage();
+                    changeItem(current, size);
+                }
+
+                @Override
+                public void onFailure(Call<List<Integer>> call, Throwable t) {
+                    Log.d("Tag", t.getMessage());
+                    t.printStackTrace();
+                }
+            });
         }
         //Thi theo bộ
         else{

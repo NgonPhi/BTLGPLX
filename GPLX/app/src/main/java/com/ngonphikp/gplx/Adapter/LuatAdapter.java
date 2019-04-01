@@ -71,13 +71,18 @@ public class LuatAdapter extends BaseAdapter {
     }
 
     public void filter(String charText){
+        // chuyển về dạng in thường để so sánh
         charText = charText.toLowerCase(Locale.getDefault());
+        // Xóa list hiện thời
         LuatList.clear();
+        // Nếu length = 0
         if (charText.length() == 0){
+            // Thêm tất cả list data vào list hiện thời
             LuatList.addAll(arrayList);
         }
         else{
             for (Luat luat : arrayList) {
+                // Những Luat thỏa mãn điều kiện lọc sẽ được thêm lần lượt vào list hiện thời
                 if (luat.getTieuDe().toLowerCase(Locale.getDefault()).contains(charText)) {
                     LuatList.add(luat);
                 }
@@ -89,6 +94,7 @@ public class LuatAdapter extends BaseAdapter {
                 }
             }
         }
+        // Thông báo cho adapter đã thay đổi
         notifyDataSetChanged();
     }
 
