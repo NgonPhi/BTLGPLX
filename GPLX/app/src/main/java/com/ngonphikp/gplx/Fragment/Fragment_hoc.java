@@ -72,8 +72,10 @@ public class Fragment_hoc extends Fragment {
         AnhXa();
         GetData();
 
-//        ((CTHocActivity) getActivity()).number[0][0] = 1;
-//        Toast.makeText(getActivity(), ((CTHocActivity) getActivity()).number[0][0] + "", Toast.LENGTH_SHORT).show();
+//        ((CTHocActivity) getActivity()).arrCheck[0][0] = 1;
+//        Toast.makeText(getActivity(), ((CTHocActivity) getActivity()).arrCheck[0][0] + "", Toast.LENGTH_SHORT).show();
+//
+//        int number[][] = ((CTHocActivity) getActivity()).arrCheck;
 
         return view;
     }
@@ -113,6 +115,11 @@ public class Fragment_hoc extends Fragment {
                 lvAnswer.setAdapter(adapter);
                 check = new ArrayList<>();
                 for (int i = 0; i < arrCTL.size(); i++)check.add(false);
+
+//                int pos = 0;
+//                View mView = (View) adapter.getView(pos,null,Fragment_hoc.this);
+//                adapter.check(mView);
+
                 lvAnswer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

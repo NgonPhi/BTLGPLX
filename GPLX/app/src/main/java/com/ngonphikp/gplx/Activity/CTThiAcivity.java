@@ -56,6 +56,8 @@ public class CTThiAcivity extends AppCompatActivity {
     String level;
 
     int stt;
+    int time;
+    int condition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +67,6 @@ public class CTThiAcivity extends AppCompatActivity {
         GetDataLocal();
         GetData();
         SetToolbar();
-        SetUpTimer();
     }
 
     private void GetData() {
@@ -113,8 +114,8 @@ public class CTThiAcivity extends AppCompatActivity {
         }
     }
 
-    private void SetUpTimer() {
-        hourglass = new Hourglass(15 * 60000, 1000) {
+    private void SetUpTimer(int m) {
+        hourglass = new Hourglass(m * 60000, 1000) {
             @Override
             public void onTimerTick(long millisUntilFinished) {
                 String countTime = String.format("%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished), TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(
@@ -161,6 +162,10 @@ public class CTThiAcivity extends AppCompatActivity {
         level = sharedPreferences.getString("Level", "A1");
         Intent intent = getIntent();
         stt = intent.getIntExtra("stt", -1);
+        time = intent.getIntExtra("time", 15);
+        condition = intent.getIntExtra("condition", 20);
+
+        SetUpTimer(time);
     }
 
     private void AnhXa() {

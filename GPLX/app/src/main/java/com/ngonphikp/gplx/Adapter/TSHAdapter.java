@@ -11,7 +11,6 @@ import com.ngonphikp.gplx.Model.ThiSatHach;
 import com.ngonphikp.gplx.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class TSHAdapter extends BaseAdapter {
 

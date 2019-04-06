@@ -6,6 +6,7 @@ import com.ngonphikp.gplx.Model.CauHoi;
 import com.ngonphikp.gplx.Model.CauTraLoi;
 import com.ngonphikp.gplx.Model.HLT;
 import com.ngonphikp.gplx.Model.Luat;
+import com.ngonphikp.gplx.Model.ThiSatHach;
 
 import java.util.List;
 
@@ -36,7 +37,7 @@ public interface Dataservice {
     @POST("getLuatbyType.php")
     Call<List<Luat>> GetLuatbyType(@Field("loai") String loai);
 
-    // Lấy loại theo tên bằng
+    // Lấy HLT theo tên bằng
     @FormUrlEncoded
     @POST("getHLTByGPLX.php")
     Call<List<HLT>> GetHLTByGPLX(@Field("tenBang") String tenBang);
@@ -66,10 +67,10 @@ public interface Dataservice {
     @POST("getIdCHNN.php")
     Call<List<Integer>> GetIdCHThiNN(@Field("tenBang") String tenBang);
 
-    // Lấy số bộ đề
+    // Lấy TSH theo tenBang
     @FormUrlEncoded
-    @POST("getLengthThi.php")
-    Call<Integer> GetLengthThi(@Field("tenBang") String tenBang);
+    @POST("getTSHbyGPLX.php")
+    Call<List<ThiSatHach>> GetTSHbyGPLX(@Field("tenBang") String tenBang);
 
     //Lấy các bằng
     @GET("getALLBang.php")

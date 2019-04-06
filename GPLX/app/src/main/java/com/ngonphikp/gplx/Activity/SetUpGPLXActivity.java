@@ -122,11 +122,11 @@ public class SetUpGPLXActivity extends AppCompatActivity {
     public void CallMethod(int pos) {
         //Lưu lại vào data
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("Level", arraySUGPLX.get(pos).getTen());
+        editor.putString("Level", arraySUGPLX.get(pos).getTenBang());
         editor.commit();
 
         //Hiển thị toast
-        Toast.makeText(this, "Chọn " + arraySUGPLX.get(pos).getTen(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Chọn " + arraySUGPLX.get(pos).getTenBang(), Toast.LENGTH_SHORT).show();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Ôn thi giấy phép lái xe");

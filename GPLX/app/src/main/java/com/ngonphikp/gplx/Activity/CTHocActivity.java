@@ -50,7 +50,7 @@ public class CTHocActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     String level;
     String loai;
-    public int number[][];
+    public int arrCheck[][];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +60,9 @@ public class CTHocActivity extends AppCompatActivity {
         GetDataLocal();
         GetData();
         SetToolbar();
-        number = new int[75][4];
-        for(int i = 0 ; i < 75; i++)
-            for(int j = 0; j < 4 ; j++)number[i][j] = 0;
+//        arrCheck = new int[200][4];
+//        for(int i = 0 ; i < 200; i++)
+//            for(int j = 0; j < 4 ; j++)arrCheck[i][j] = 0;
     }
 
     private void SetUpPage() {

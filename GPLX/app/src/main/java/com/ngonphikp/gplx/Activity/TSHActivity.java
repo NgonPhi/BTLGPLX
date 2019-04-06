@@ -17,8 +17,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 import android.support.v7.app.AlertDialog;
+import android.widget.Toast;
 
 import com.ngonphikp.gplx.Adapter.TSHAdapter;
 import com.ngonphikp.gplx.Model.ThiSatHach;
@@ -27,6 +27,7 @@ import com.ngonphikp.gplx.Service.APIService;
 import com.ngonphikp.gplx.Service.Dataservice;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -66,18 +67,22 @@ public class TSHActivity extends AppCompatActivity {
         gvDanhSachThi.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Thi(position);
+                int time = arrayThiSatHach.get(position).getTime();
+                int condition = arrayThiSatHach.get(position).getCondition();
+                Thi(position, time, condition);
             }
         });
         itemThiNgauNhien.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Thi(-1);
+                int time = arrayThiSatHach.get(0).getTime();
+                int condition = arrayThiSatHach.get(0).getCondition();
+                Thi(-1, time, condition);
             }
         });
     }
 
-    private void Thi(final int postion){
+    private void Thi(final int postion, final int time, final int condition){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Ôn thi giấy phép lái xe");
         builder.setMessage("Bạn đã sẵn sàng thi?");
@@ -87,6 +92,8 @@ public class TSHActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 Intent intent = new Intent(TSHActivity.this, CTThiAcivity.class);
                 intent.putExtra("stt", postion);
+                intent.putExtra("time", time);
+                intent.putExtra("condition", condition);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_out, R.anim.slide_in);
             }
@@ -104,20 +111,20 @@ public class TSHActivity extends AppCompatActivity {
     private void GetData() {
         final int[] length = new int[1];
         Dataservice dataservice = APIService.getService();
-        Call<Integer> callback = dataservice.GetLengthThi(level);
-        callback.enqueue(new Callback<Integer>() {
+        Call<List<ThiSatHach>> callback = dataservice.GetTSHbyGPLX(level);
+        arrayThiSatHach = new ArrayList<>();
+        callback.enqueue(new Callback<List<ThiSatHach>>() {
             @Override
-            public void onResponse(Call<Integer> call, Response<Integer> response) {
-                length[0] = response.body();
-                arrayThiSatHach = new ArrayList<>();
-                for(int i = 0; i < length[0]; i++)
-                    arrayThiSatHach.add(new ThiSatHach(0, 20));
+            public void onResponse(Call<List<ThiSatHach>> call, Response<List<ThiSatHach>> response) {
+                arrayThiSatHach = (ArrayList<ThiSatHach>) response.body();
                 adapter = new TSHAdapter(TSHActivity.this, R.layout.item_thi, arrayThiSatHach);
                 gvDanhSachThi.setAdapter(adapter);
                 progressBar.setVisibility(View.GONE);
+                itemThiNgauNhien.setVisibility(View.VISIBLE);
             }
+
             @Override
-            public void onFailure(Call<Integer> call, Throwable t) {
+            public void onFailure(Call<List<ThiSatHach>> call, Throwable t) {
                 Log.d("Tag", t.getMessage());
                 t.printStackTrace();
             }

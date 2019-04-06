@@ -5,24 +5,24 @@ import com.google.gson.annotations.SerializedName;
 
 public class Bang {
 
-    @SerializedName("Ten")
+    @SerializedName("TenBang")
     @Expose
-    private String ten;
+    private String tenBang;
     @SerializedName("NoiDung")
     @Expose
     private String noiDung;
 
-    public Bang(String ten, String noiDung) {
-        this.ten = ten;
+    public Bang(String tenBang, String noiDung) {
+        this.tenBang = tenBang;
         this.noiDung = noiDung;
     }
 
-    public String getTen() {
-    return ten;
+    public String getTenBang() {
+    return tenBang;
     }
 
-    public void setTen(String ten) {
-    this.ten = ten;
+    public void setTenBang(String tenBang) {
+    this.tenBang = tenBang;
     }
 
     public String getNoiDung() {

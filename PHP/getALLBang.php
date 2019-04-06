@@ -3,8 +3,8 @@
 
     //Tạo Class
     class Bang{
-        function Bang($ten, $noiDung){
-            $this->Ten = $ten;
+        function Bang($tenBang, $noiDung){
+            $this->TenBang = $tenBang;
             $this->NoiDung = $noiDung;
         }
     }
@@ -13,11 +13,11 @@
     $mang = array();    
 
     //Thực hiện truy vấn
-    $sql = "SELECT * FROM Bang";
+    $sql = "SELECT tenBang, noiDung FROM Bang";
     $result = $conn->query($sql);
     foreach ($result as $row) {
         //Thêm vào mảng
-        $mang[] = new Bang($row["ten"], $row["noiDung"]);
+        $mang[] = new Bang($row["tenBang"], $row["noiDung"]);
     }
     
     //Xuất dạng JSON

@@ -1,28 +1,53 @@
 package com.ngonphikp.gplx.Model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class ThiSatHach {
-    private int current;
-    private int size;
 
-    public ThiSatHach(int current, int size) {
-        this.current = current;
-        this.size = size;
-    }
+@SerializedName("Current")
+@Expose
+private Integer current;
+@SerializedName("Size")
+@Expose
+private Integer size;
+@SerializedName("Time")
+@Expose
+private Integer time;
+@SerializedName("Condition")
+@Expose
+private Integer condition;
 
-    public int getCurrent() {
-        return current;
-    }
+public Integer getCurrent() {
+return current;
+}
 
-    public void setCurrent(int current) {
-        this.current = current;
-    }
+public void setCurrent(Integer current) {
+this.current = current;
+}
 
-    public int getSize() {
-        return size;
-    }
+public Integer getSize() {
+return size;
+}
 
-    public void setSize(int size) {
-        this.size = size;
-    }
+public void setSize(Integer size) {
+this.size = size;
+}
+
+public Integer getTime() {
+return time;
+}
+
+public void setTime(Integer time) {
+this.time = time;
+}
+
+public Integer getCondition() {
+return condition;
+}
+
+public void setCondition(Integer condition) {
+this.condition = condition;
+}
 
 }

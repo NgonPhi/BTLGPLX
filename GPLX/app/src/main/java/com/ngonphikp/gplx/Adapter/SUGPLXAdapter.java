@@ -28,7 +28,7 @@ public class SUGPLXAdapter extends BaseAdapter {
 
     public void setSelectedPosition(String level) {
         for(int i = 0; i < SUGPLXList.size(); i++){
-            if (SUGPLXList.get(i).getTen().equals(level)){
+            if (SUGPLXList.get(i).getTenBang().equals(level)){
                 this.selectedPosition = i;
             }
         }
@@ -66,7 +66,7 @@ public class SUGPLXAdapter extends BaseAdapter {
         TextView txtContent = (TextView) convertView.findViewById(R.id.textViewContent);
         RadioButton radioBtn = (RadioButton) convertView.findViewById(R.id.radioButton);
         //gán giá trị
-        txtType.setText(SUGPLXList.get(position).getTen());
+        txtType.setText(SUGPLXList.get(position).getTenBang());
         txtContent.setText(SUGPLXList.get(position).getNoiDung());
 
         //check the radio button if both position and selectedPosition matches
