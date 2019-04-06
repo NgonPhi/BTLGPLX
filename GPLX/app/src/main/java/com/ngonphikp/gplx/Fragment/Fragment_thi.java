@@ -15,6 +15,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ngonphikp.gplx.Activity.CTHocActivity;
+import com.ngonphikp.gplx.Activity.CTThiAcivity;
 import com.ngonphikp.gplx.Adapter.AnswerAdapter;
 import com.ngonphikp.gplx.Model.CauHoi;
 import com.ngonphikp.gplx.Model.CauTraLoi;
@@ -41,17 +43,19 @@ public class Fragment_thi extends Fragment {
     ArrayList<CauTraLoi> arrCTL;
     ArrayList<Boolean> check;
     ProgressBar progressBar;
+    ArrayList<Integer> SelectList;
 
-    private static final String KEY = "key";
     private int id;
+    private int pos;
 
     public Fragment_thi() {
     }
 
-    public static Fragment_thi newInstance(int id){
+    public static Fragment_thi newInstance(int id, int pos){
         Fragment_thi fragment_thi = new Fragment_thi();
         Bundle bundle = new Bundle();
-        bundle.putInt(KEY, id);
+        bundle.putInt("id", id);
+        bundle.putInt("pos", pos);
         fragment_thi.setArguments(bundle);
         return fragment_thi;
     }
@@ -60,7 +64,11 @@ public class Fragment_thi extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        id = getArguments().getInt(KEY);
+        id = getArguments().getInt("id");
+        pos = getArguments().getInt("pos");
+
+        SelectList = new ArrayList<>();
+        for (int i = 0; i < 4; i++)SelectList.add(((CTThiAcivity) getActivity()).arrSelect[pos][i]);
     }
 
     @Nullable
@@ -104,15 +112,33 @@ public class Fragment_thi extends Fragment {
             @Override
             public void onResponse(Call<List<CauTraLoi>> call, Response<List<CauTraLoi>> response) {
                 arrCTL = (ArrayList<CauTraLoi>) response.body();
-                adapter = new AnswerAdapter(getContext(), R.layout.dong_answer, arrCTL);
+                adapter = new AnswerAdapter(getContext(), R.layout.dong_answer, arrCTL, SelectList);
+
                 lvAnswer.setAdapter(adapter);
                 check = new ArrayList<>();
                 for (int i = 0; i < arrCTL.size(); i++)check.add(false);
+
+                for (int i = 0; i < arrCTL.size(); i++)
+                    if(SelectList.get(i) != 0)check.set(i, true);
+
                 lvAnswer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        adapter.toggleCheck(view, check.get(position));
-                        check.set(position, !check.get(position));
+//                        adapter.toggleCheck(view, check.get(position));
+//                        check.set(position, !check.get(position));
+                        if (check.get(position)){
+                            adapter.unCheck(view);
+                            check.set(position, false);
+
+                            ((CTThiAcivity) getActivity()).arrSelect[pos][position] = 0;
+                        }
+                        else{
+                            adapter.check(view);
+                            check.set(position, true);
+
+                            ((CTThiAcivity) getActivity()).arrSelect[pos][position] = 1;
+                        }
+
                     }
                 });
 

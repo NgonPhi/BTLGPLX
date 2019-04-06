@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.CTHocActivity"></activity>
+        <activity android:name=".Activity.CTHocActivity"/>
         <activity android:name=".Activity.CTThiAcivity" />
         <activity android:name=".Activity.CTMTActivity" />
         <activity android:name=".Activity.LuatActivity" />
@@ -27,7 +27,6 @@
         <activity android:name=".Activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

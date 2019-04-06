@@ -18,11 +18,20 @@ public class AnswerAdapter extends BaseAdapter {
     private Context context;
     private int layout;
     private ArrayList<CauTraLoi> AnswerList;
+    private ArrayList<Integer> SelectList;
 
     public AnswerAdapter(Context context, int layout, ArrayList<CauTraLoi> answerList) {
         this.context = context;
         this.layout = layout;
-        this.AnswerList = answerList;
+        AnswerList = answerList;
+        SelectList = null;
+    }
+
+    public AnswerAdapter(Context context, int layout, ArrayList<CauTraLoi> answerList, ArrayList<Integer> selectList) {
+        this.context = context;
+        this.layout = layout;
+        AnswerList = answerList;
+        SelectList = selectList;
     }
 
     @Override
@@ -52,6 +61,12 @@ public class AnswerAdapter extends BaseAdapter {
         //gán giá trị
         txtCount.setText((position + 1) + "");
         txtContent.setText(AnswerList.get(position).getNoiDung());
+
+        if (SelectList != null && SelectList.get(position) != null && SelectList.get(position) == 1){
+            check(convertView);
+            //checkTrue(convertView);
+        }
+        //else if (SelectList != null && SelectList.get(position) != null && SelectList.get(position) == 2)checkFalse(convertView);
         return convertView;
     }
 
@@ -72,14 +87,14 @@ public class AnswerAdapter extends BaseAdapter {
         else check(view);
     }
 
-    private void check(View view){
+    public void check(View view){
         ImageView imageViewBG = (ImageView) view.findViewById(R.id.imageViewBG);
         imageViewBG.setImageResource(R.drawable.cicletrue);
         ImageView imageViewCheck = (ImageView) view.findViewById(R.id.imageViewCheck);
         imageViewCheck.setVisibility(View.VISIBLE);
     }
 
-    private void unCheck(View view){
+    public void unCheck(View view){
         ImageView imageViewBG = (ImageView) view.findViewById(R.id.imageViewBG);
         imageViewBG.setImageResource(R.drawable.circle);
         ImageView imageViewCheck = (ImageView) view.findViewById(R.id.imageViewCheck);

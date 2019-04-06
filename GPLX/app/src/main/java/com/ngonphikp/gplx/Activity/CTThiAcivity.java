@@ -59,6 +59,8 @@ public class CTThiAcivity extends AppCompatActivity {
     int time;
     int condition;
 
+    public int arrSelect[][];
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +69,10 @@ public class CTThiAcivity extends AppCompatActivity {
         GetDataLocal();
         GetData();
         SetToolbar();
+
+        arrSelect = new int[30][4];
+        for(int i = 0 ; i < 30; i++)
+            for(int j = 0; j < 4 ; j++)arrSelect[i][j] = 0;
     }
 
     private void GetData() {
@@ -135,7 +141,7 @@ public class CTThiAcivity extends AppCompatActivity {
         FragmentManager manager = getSupportFragmentManager();
         PageAdapter adapter = new PageAdapter(manager);
         for (int i = 0; i < arrIdCH.size() ; i++){
-            adapter.add(Fragment_thi.newInstance(arrIdCH.get(i)));
+            adapter.add(Fragment_thi.newInstance(arrIdCH.get(i), i));
         }
         pager.setAdapter(adapter);
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

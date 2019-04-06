@@ -71,12 +71,6 @@ public class Fragment_hoc extends Fragment {
 
         AnhXa();
         GetData();
-
-//        ((CTHocActivity) getActivity()).arrCheck[0][0] = 1;
-//        Toast.makeText(getActivity(), ((CTHocActivity) getActivity()).arrCheck[0][0] + "", Toast.LENGTH_SHORT).show();
-//
-//        int number[][] = ((CTHocActivity) getActivity()).arrCheck;
-
         return view;
     }
 
@@ -111,19 +105,27 @@ public class Fragment_hoc extends Fragment {
             @Override
             public void onResponse(Call<List<CauTraLoi>> call, Response<List<CauTraLoi>> response) {
                 arrCTL = (ArrayList<CauTraLoi>) response.body();
+
                 adapter = new AnswerAdapter(getContext(), R.layout.dong_answer, arrCTL);
+
+//                ArrayList<Integer> SelectList = new ArrayList<>();
+//                SelectList.add(1);
+//                SelectList.add(0);
+//                SelectList.add(2);
+//                SelectList.add(0);
+//
+//                adapter = new AnswerAdapter(getContext(), R.layout.dong_answer, arrCTL, SelectList);
                 lvAnswer.setAdapter(adapter);
                 check = new ArrayList<>();
                 for (int i = 0; i < arrCTL.size(); i++)check.add(false);
-
-//                int pos = 0;
-//                View mView = (View) adapter.getView(pos,null,Fragment_hoc.this);
-//                adapter.check(mView);
+//                for (int i = 0; i < arrCTL.size(); i++)
+//                    if(SelectList.get(i) != 0)check.set(i, true);
 
                 lvAnswer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         adapter.toggleCheck(view, check.get(position));
+
                         if (!check.get(position)){
                             if(arrCTL.get(position).getKiemTra().equals("true"))adapter.checkTrue(view);
                             else adapter.checkFalse(view);
