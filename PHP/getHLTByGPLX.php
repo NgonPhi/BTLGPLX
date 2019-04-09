@@ -40,7 +40,7 @@
 
     //Tạo Class
     class HLT{
-        function HLT($loai, $hinhAnh, $size){            
+        function __construct($loai, $hinhAnh, $size){            
             $this->HinhAnh = $hinhAnh;
             $this->Loai = $loai;
             $this->Size = $size;

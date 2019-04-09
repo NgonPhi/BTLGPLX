@@ -3,7 +3,7 @@
 
     //Tạo Class
     class CauHoi{
-        function CauHoi($id, $noiDung, $hinhAnh){
+        function __construct($id, $noiDung, $hinhAnh){
             $this->Id = $id;
             $this->NoiDung = $noiDung;
             $this->HinhAnh = $hinhAnh;

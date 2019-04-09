@@ -3,7 +3,7 @@
 
     //Tạo Class
     class Bang{
-        function Bang($tenBang, $noiDung){
+        function __construct($tenBang, $noiDung){
             $this->TenBang = $tenBang;
             $this->NoiDung = $noiDung;
         }

@@ -3,7 +3,7 @@
 
     //Tạo Class
     class BBDB{
-        function BBDB($id, $tieuDe, $noiDung, $hinhAnh, $loai){
+        function __construct($id, $tieuDe, $noiDung, $hinhAnh, $loai){
             $this->Id = $id;
             $this->TieuDe = $tieuDe;
             $this->NoiDung = $noiDung;

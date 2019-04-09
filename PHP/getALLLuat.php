@@ -3,7 +3,7 @@
 
     //Tạo Class
     class Luat{
-        function Luat($id, $tieuDe, $hinhAnh, $noiDung, $loai, $tienPhat){
+        function __construct($id, $tieuDe, $hinhAnh, $noiDung, $loai, $tienPhat){
             $this->Id = $id;
             $this->TieuDe = $tieuDe;            
             $this->HinhAnh = $hinhAnh;

@@ -109,7 +109,6 @@ public class TSHActivity extends AppCompatActivity {
     }
 
     private void GetData() {
-        final int[] length = new int[1];
         Dataservice dataservice = APIService.getService();
         Call<List<ThiSatHach>> callback = dataservice.GetTSHbyGPLX(level);
         arrayThiSatHach = new ArrayList<>();

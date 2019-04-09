@@ -3,7 +3,7 @@
 
     //Tạo Class
     class CauTraLoi{
-        function CauTraLoi($id, $noiDung, $kiemTra, $idCH){
+        function __construct($id, $noiDung, $kiemTra, $idCH){
             $this->Id = $id;
             $this->NoiDung = $noiDung;
             $this->KiemTra = $kiemTra;

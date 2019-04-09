@@ -5,7 +5,7 @@
 
     //Tạo Class
     class ThiSatHach{
-        function ThiSatHach($current, $size, $time, $condition){
+        function __construct($current, $size, $time, $condition){
             $this->Current = $current;
             $this->Size = $size;
             $this->Time = $time;
