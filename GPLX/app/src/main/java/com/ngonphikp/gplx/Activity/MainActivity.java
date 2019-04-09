@@ -26,7 +26,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    // khai báo 6 item tương ứng với 6 tác vụ chính
     ConstraintLayout itemTSH, itemHLT, itemBB, itemMT, itemTCL, itemCCS;
+
     android.support.v7.widget.Toolbar toolbar;
     DrawerLayout drawerLayout;
 
@@ -238,6 +240,7 @@ public class MainActivity extends AppCompatActivity {
     private void OpenTSHActivity(){
         Intent intent = new Intent(MainActivity.this, TSHActivity.class);
         startActivity(intent);
+        // hiệu ứng animation khi thay đổi 2 màn hình
         overridePendingTransition(R.anim.slide_out, R.anim.slide_in);
     }
 

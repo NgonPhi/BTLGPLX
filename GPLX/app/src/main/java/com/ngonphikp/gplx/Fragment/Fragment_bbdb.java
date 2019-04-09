@@ -39,11 +39,13 @@ public class Fragment_bbdb extends Fragment {
     public Fragment_bbdb() {
     }
 
+    //Hàm tạo 1 thực thể fragment mới
     public static Fragment_bbdb newInstance(String type){
         Fragment_bbdb fragment_bbdb = new Fragment_bbdb();
         Bundle bundle = new Bundle();
         bundle.putString(KEY, type);
         fragment_bbdb.setArguments(bundle);
+        //tự động gọi hàm onCreate , on CreateView
         return fragment_bbdb;
     }
 
