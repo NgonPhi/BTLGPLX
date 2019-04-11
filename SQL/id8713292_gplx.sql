@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: localhost:3306
--- Thời gian đã tạo: Th4 06, 2019 lúc 01:34 AM
+-- Thời gian đã tạo: Th4 11, 2019 lúc 01:11 PM
 -- Phiên bản máy phục vụ: 10.3.14-MariaDB
 -- Phiên bản PHP: 7.3.2
 
@@ -321,7 +321,7 @@ INSERT INTO `CauHoi` (`id`, `noiDung`, `hinhAnh`, `loai`, `flag`) VALUES
 (121, 'Người kinh doanh vận tải hành khách có những nghĩa vụ nào theo quy định ? ', NULL, 'Nghiệp vụ vận tải', NULL),
 (122, 'Khái niệm về văn hóa giao thông được hiểu như thế nào là đúng?', NULL, 'Văn hóa đạo đức', ''),
 (123, 'Người lá xe cố tình vi phạm Luật Giao thông đường bộ, không phân biệt làn đường, vạch phân làn, phóng nhanh, vượt ẩu, vượt đèn đỏ, đi vào đường cấm, đường một chiều được coi là hành vi nào trong các hành vi sau đây?', NULL, 'Văn hóa đạo đức', ''),
-(124, 'Trong các hành vi dưới đây, người lá xe mô tô có văn hóa giao thông phải ứng xử như thế nào?', NULL, 'Văn hóa đạo đức', '1'),
+(124, 'Trong các hành vi dưới đây, người lái xe mô tô có văn hóa giao thông phải ứng xử như thế nào?', NULL, 'Văn hóa đạo đức', '1'),
 (125, 'Trong các hành vi dưới đây, người lái xe mô tô có văn hóa giao thông phải ứng xử thế nào?', NULL, 'Văn hóa đạo đức', '1'),
 (126, 'Người có văn hóa giao thông khi điều khiển xe cơ giới tham gia giao thông đường bộ phải đảm bảo các điều kiện gì?', NULL, 'Văn hóa đạo đức', '1'),
 (127, 'Khi gặp biển nào thì xe mô tô hai bánh được đi vào?', 'https://androidwsv.000webhostapp.com/HinhAnh/CHBB/bb21.PNG', 'Hệ thống biển báo ', '1'),
@@ -657,7 +657,36 @@ INSERT INTO `CauTraLoi` (`id`, `noiDung`, `kiemTra`, `idCH`) VALUES
 (258, 'Cả hai ý trên', 'false', 52),
 (259, 'Là trách nhiệm của ngành Giao thông vận tải và ngành Công an', 'false', 53),
 (260, 'Là trách nhiệm của cơ quan, tổ chức, cá nhân', 'true', 53),
-(261, 'Là trách nhiệm của cảnh sát giao thông', 'false', 53);
+(261, 'Là trách nhiệm của cảnh sát giao thông', 'false', 53),
+(262, 'Xe tải, xe lam, xe con, mô tô.', 'false', 64),
+(263, 'Xe tải, mô tô, xe lam, xe con.', 'true', 64),
+(264, 'Xe lam, xe tải, xe con, mô tô.', 'false', 64),
+(265, 'Mô tô, xe lam, xe tải, xe con.', 'false', 64),
+(266, 'Xe công an, xe con, xe tải, xe lam.', 'true', 65),
+(267, 'Xe công an, xe lam, xe con, xe tải.', 'false', 65),
+(268, 'Xe công an, xe tải, xe lam, xe con', 'false', 65),
+(269, 'Xe con, xe công an, xe tải, xe lam.', 'false', 65),
+(270, 'Xe tải, xe lam, mô tô.', 'false', 66),
+(271, 'Xe lam, xe tải, mô tô.', 'false', 66),
+(272, 'Mô tô, xe lam, xe tải.', 'true', 66),
+(273, 'Xe lam, mô tô, xe tải.', 'false', 66),
+(274, 'Mô tô', 'false', 67),
+(275, 'Xe con', 'true', 67),
+(276, 'Xe con', 'true', 68),
+(277, 'Xe tải', 'false', 68),
+(278, 'Điều khiển xe đi trên phần đường, làn đường có ít phương tiện tham gia giao thông, đội mũ bảo hiểm ở nơi có biển báo bắt buộc đội mũ bảo hiểm.', 'false', 124),
+(279, 'Chấp hành quy định về tốc độ, đèn tín hiệu, biển báo hiệu, vạch kẻ đường khi lái xe.', 'true', 124),
+(280, 'Chấp hành hiệu lệnh, chỉ dẫn của người điều khiển giao thông; nhường đường cho người đi bộ, người già, trẻ em, người khuyết tật.', 'true', 124),
+(281, 'Ca ba ý nêu trên.', 'false', 124),
+(282, 'Xe tải, xe công an, xe khách, xe con.', 'false', 69),
+(283, 'Xe công an, xe khách, xe con, xe tải.', 'false', 69),
+(284, 'Xe công an, xe con, xe tải, xe khách.', 'false', 69),
+(285, 'Xe công an, xe tải, xe khách, xe con.', 'true', 69),
+(286, 'Xe lam, xe cứu thương, xe con.', 'true', 70),
+(287, 'Xe cứu thương, xe con, xe lam.', 'false', 70),
+(288, 'Xe con, xe lam, xe cứu thương.', 'false', 70),
+(289, 'Mô tô.', 'false', 71),
+(290, 'Xe cứu thương', 'true', 71);
 
 -- --------------------------------------------------------
 
@@ -859,7 +888,7 @@ ALTER TABLE `CauHoi`
 -- AUTO_INCREMENT cho bảng `CauTraLoi`
 --
 ALTER TABLE `CauTraLoi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=262;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=291;
 
 --
 -- AUTO_INCREMENT cho bảng `Luat`
